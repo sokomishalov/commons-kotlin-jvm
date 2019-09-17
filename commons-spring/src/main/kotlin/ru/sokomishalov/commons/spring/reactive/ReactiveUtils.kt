@@ -25,7 +25,7 @@ suspend inline fun <reified T> Publisher<T>.awaitResponse(): ServerResponse =
                 .body(fromPublisher(this, T::class.java))
                 .awaitStrict()
 
-suspend fun FilePart.convertToByteArray(): ByteArray = withContext(IO) {
+suspend inline fun FilePart.convertToByteArray(): ByteArray = withContext(IO) {
     ByteArrayDecoder()
             .decodeToMono(content(), ResolvableType.NONE, null, emptyMap<String, Any>())
             .awaitStrict()

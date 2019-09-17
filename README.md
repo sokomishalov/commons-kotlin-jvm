@@ -1,10 +1,11 @@
+[![](https://jitpack.io/v/SokoMishaLov/commons.svg)](https://jitpack.io/#SokoMishaLov/commons)
 # Sokomishalov Commons
 
 ## Overview
 Helpers and utilities for jvm languages
 
 ## Installation 
-Maven:
+Add jitpack repository:
 ```xml
 <repositories>
 	<repository>
@@ -16,7 +17,7 @@ Maven:
 Add the dependency:
 ```xml
 <dependency>
-    <groupId>ru.sokomishalov.commons</groupId>
+    <groupId>com.github.sokomishalov</groupId>
     <artifactId>commons-[module]</artifactId>
     <version>1.0.0</version>
 </dependency>
