@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/SokoMishaLov/commons.svg)](https://jitpack.io/#SokoMishaLov/commons)
+[![](https://jitpack.io/v/sokomishalov/commons.svg)](https://jitpack.io/#sokomishalov/commons)
 # Sokomishalov Commons
 
 ## Overview
@@ -17,7 +17,7 @@ Add jitpack repository:
 Add the dependency:
 ```xml
 <dependency>
-    <groupId>com.github.sokomishalov</groupId>
+    <groupId>com.github.sokomishalov.commons</groupId>
     <artifactId>commons-[module]</artifactId>
     <version>1.0.0</version>
 </dependency>
