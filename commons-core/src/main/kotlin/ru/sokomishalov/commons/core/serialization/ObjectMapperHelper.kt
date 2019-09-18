@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUM
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS
 import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
+import com.fasterxml.jackson.dataformat.csv.CsvFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.guava.GuavaModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -25,6 +26,8 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
 
 val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(YAMLFactory())
+
+val CSV_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(CsvFactory())
 
 private fun buildComplexObjectMapper(factory: JsonFactory? = null): ObjectMapper {
     return ObjectMapper(factory)
