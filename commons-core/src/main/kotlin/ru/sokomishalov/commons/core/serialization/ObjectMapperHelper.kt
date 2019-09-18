@@ -7,11 +7,13 @@ package ru.sokomishalov.commons.core.serialization
  */
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
+import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.DeserializationFeature.*
 import com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS
 import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.guava.GuavaModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -22,8 +24,10 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  */
 val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
 
-private fun buildComplexObjectMapper(): ObjectMapper {
-    return ObjectMapper()
+val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(YAMLFactory())
+
+private fun buildComplexObjectMapper(factory: JsonFactory? = null): ObjectMapper {
+    return ObjectMapper(factory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
             .registerModule(GuavaModule())
