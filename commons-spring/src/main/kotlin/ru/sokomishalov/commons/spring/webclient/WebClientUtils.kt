@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.sokomishalov.commons.spring.webclient
 
 import io.netty.handler.ssl.SslContextBuilder

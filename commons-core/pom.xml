@@ -22,6 +22,7 @@
         <commons-collections.version>4.4</commons-collections.version>
         <guava.version>28.1-jre</guava.version>
         <reactor.version>3.2.12.RELEASE</reactor.version>
+        <reactor-addons.version>3.2.3.RELEASE</reactor-addons.version>
         <slf4j.version>1.7.28</slf4j.version>
         <easy-random.version>4.0.0</easy-random.version>
     </properties>
@@ -58,6 +59,18 @@
             <artifactId>kotlinx-coroutines-jdk8</artifactId>
             <version>${kotlinx.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>${reactor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor.addons</groupId>
+            <artifactId>reactor-extra</artifactId>
+            <version>${reactor-addons.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
