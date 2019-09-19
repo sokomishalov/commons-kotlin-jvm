@@ -4,6 +4,9 @@ package ru.sokomishalov.commons.core.log
 
 import org.slf4j.Logger
 
+/**
+ * @author sokomishalov
+ */
 interface Loggable {
 
     val log: Logger get() = CustomLoggerFactory.getLogger(javaClass)

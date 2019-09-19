@@ -2,10 +2,6 @@
 
 package ru.sokomishalov.commons.core.serialization
 
-/**
- * @author sokomishalov
- */
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.DeserializationFeature.*

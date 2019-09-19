@@ -7,6 +7,9 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import org.apache.commons.io.IOUtils.toByteArray as iOUtilsToByteArray
 
+/**
+ * @author sokomishalov
+ */
 
 fun InputStream.toByteArray(): ByteArray = iOUtilsToByteArray(this)
 
