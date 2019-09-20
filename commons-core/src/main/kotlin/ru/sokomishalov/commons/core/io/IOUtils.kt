@@ -22,8 +22,6 @@ fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<Z
             return next != null
         }
 
-        override operator fun next(): ZipEntry {
-            return next ?: throw NoSuchElementException()
-        }
+        override operator fun next(): ZipEntry = next ?: throw NoSuchElementException()
     }
 }
