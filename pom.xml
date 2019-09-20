@@ -6,7 +6,7 @@
 
     <groupId>ru.sokomishalov.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>pom</packaging>
 
     <properties>

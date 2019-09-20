@@ -25,7 +25,7 @@ import springfox.documentation.builders.PathSelectors.any as anyPath
  */
 
 fun createSwaggerDocket(
-        mainClass: Class<Any> = Any::class.java,
+        mainClass: Class<out Any> = Any::class.java,
         basePackageName: String = mainClass.`package`.name,
         pathPredicate: Predicate<String> = anyPath(),
         securityContext: SecurityContext? = null,
