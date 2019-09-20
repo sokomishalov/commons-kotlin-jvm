@@ -3,7 +3,6 @@
 package ru.sokomishalov.commons.spring.swagger
 
 import com.fasterxml.classmate.TypeResolver
-import com.google.common.base.Predicate
 import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.http.server.reactive.ServerHttpRequest
@@ -11,23 +10,18 @@ import org.springframework.web.multipart.MultipartFile
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import springfox.documentation.builders.ApiInfoBuilder
-import springfox.documentation.builders.RequestHandlerSelectors.basePackage
 import springfox.documentation.schema.AlternateTypeRules.newRule
 import springfox.documentation.service.Contact
 import springfox.documentation.service.SecurityScheme
 import springfox.documentation.spi.DocumentationType.SWAGGER_2
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
-import springfox.documentation.builders.PathSelectors.any as anyPath
 
 /**
  * @author sokomishalov
  */
 
-fun createSwaggerDocket(
-        mainClass: Class<out Any> = Any::class.java,
-        basePackageName: String = mainClass.`package`.name,
-        pathPredicate: Predicate<String> = anyPath(),
+fun Docket.customizeDocket(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
         title: String = "",
@@ -37,8 +31,6 @@ fun createSwaggerDocket(
     val typeResolver = TypeResolver()
     return Docket(SWAGGER_2)
             .select()
-            .apis(basePackage(basePackageName))
-            .paths(pathPredicate)
             .build()
             .securityContexts(when {
                 securityContext != null -> listOf(securityContext)
