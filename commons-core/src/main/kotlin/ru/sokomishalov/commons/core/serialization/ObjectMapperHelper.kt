@@ -7,6 +7,9 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.DeserializationFeature.*
 import com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LOWER_CAMEL_CASE
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE
 import com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS
 import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
 import com.fasterxml.jackson.dataformat.csv.CsvFactory
@@ -21,11 +24,16 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  */
 val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
 
+val SNAKE_CASE_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(namingStrategy = SNAKE_CASE)
+
 val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(YAMLFactory())
 
 val CSV_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(CsvFactory())
 
-private fun buildComplexObjectMapper(factory: JsonFactory? = null): ObjectMapper {
+fun buildComplexObjectMapper(
+        factory: JsonFactory? = null,
+        namingStrategy: PropertyNamingStrategy = LOWER_CAMEL_CASE
+): ObjectMapper {
     return ObjectMapper(factory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
@@ -48,4 +56,5 @@ private fun buildComplexObjectMapper(factory: JsonFactory? = null): ObjectMapper
                     FAIL_ON_UNKNOWN_PROPERTIES
             )
             .setSerializationInclusion(NON_NULL)
+            .setPropertyNamingStrategy(namingStrategy)
 }
