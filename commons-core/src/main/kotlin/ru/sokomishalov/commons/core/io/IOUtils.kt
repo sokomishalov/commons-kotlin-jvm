@@ -14,16 +14,16 @@ import org.apache.commons.io.IOUtils.toByteArray as iOUtilsToByteArray
 fun InputStream.toByteArray(): ByteArray = iOUtilsToByteArray(this)
 
 fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<ZipEntry> {
-    override fun iterator(): Iterator<ZipEntry> {
-        return object : Iterator<ZipEntry> {
-            var next: ZipEntry? = nextEntry
+    override fun iterator(): Iterator<ZipEntry> = object : Iterator<ZipEntry> {
+        var next: ZipEntry? = null
 
-            override operator fun hasNext() = next != null
-            override operator fun next(): ZipEntry {
-                val tmp = next ?: throw NoSuchElementException()
-                next = nextEntry
-                return tmp
-            }
+        override operator fun hasNext(): Boolean {
+            next = nextEntry
+            return next != null
+        }
+
+        override operator fun next(): ZipEntry {
+            return next ?: throw NoSuchElementException()
         }
     }
 }
