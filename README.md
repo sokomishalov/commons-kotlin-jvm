@@ -19,7 +19,7 @@ Add the dependency:
 <dependency>
     <groupId>com.github.sokomishalov.commons</groupId>
     <artifactId>commons-[module]</artifactId>
-    <version>1.0.0</version>
+    <version>Tag</version>
 </dependency>
 ```
 

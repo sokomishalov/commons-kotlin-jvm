@@ -27,6 +27,7 @@
         <logback.version>1.2.3</logback.version>
         <easy-random.version>4.0.0</easy-random.version>
         <classgraph.version>4.8.47</classgraph.version>
+        <jsoup.version>1.12.1</jsoup.version>
     </properties>
 
 
@@ -149,6 +150,11 @@
             <version>${slf4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>

@@ -9,19 +9,19 @@ import org.slf4j.Logger
  */
 interface Loggable {
 
-    val log: Logger get() = CustomLoggerFactory.getLogger(javaClass)
+    val logger: Logger get() = CustomLoggerFactory.getLogger(javaClass)
 
-    fun log(s: String?) = log.info(s)
+    fun log(s: String?) = logger.info(s)
 
-    fun logInfo(s: String?) = log.info(s)
+    fun logInfo(s: String?) = logger.info(s)
 
-    fun logDebug(s: String?) = log.debug(s)
+    fun logDebug(s: String?) = logger.debug(s)
 
     fun logWarn(t: Throwable) = logWarn(t.message)
 
-    fun logWarn(message: String?) = log.warn(message)
+    fun logWarn(message: String?) = logger.warn(message)
 
     fun logError(t: Throwable) = logError(t.message, t)
 
-    fun logError(message: String?, t: Throwable) = log.error(message, t)
+    fun logError(message: String?, t: Throwable) = logger.error(message, t)
 }
