@@ -37,3 +37,16 @@ suspend fun getImageDimensions(url: String?, default: Pair<Int, Int> = 1 to 1): 
         default
     }
 }
+
+suspend fun getImageAspectRatio(url: String?): Double {
+    return getImageDimensions(url).run { first.toDouble().div(second) }
+}
+
+suspend fun checkImageUrl(url: String?): Boolean {
+    return runCatching {
+        getImageByteArray(url).toBufferedImage()
+        true
+    }.getOrElse {
+        false
+    }
+}
