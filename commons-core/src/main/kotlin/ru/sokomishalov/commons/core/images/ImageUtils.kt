@@ -1,29 +1,39 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
 package ru.sokomishalov.commons.core.images
 
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.net.URL
+import ru.sokomishalov.commons.core.http.REACTIVE_NETTY_HTTP_CLIENT
+import ru.sokomishalov.commons.core.reactor.awaitStrict
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
 import javax.imageio.ImageIO
 
-suspend fun getImageByteArray(url: String?, orElse: ByteArray = ByteArray(0)): ByteArray = runCatching {
-    withContext(IO) {
-        val bufferedImage = ImageIO.read(URL(url))
-        ByteArrayOutputStream().use {
-            ImageIO.write(bufferedImage, "jpg", it)
-            it.toByteArray()
-        }
+
+fun ByteArray.toBufferedImage(): BufferedImage {
+    return ByteArrayInputStream(this).use {
+        ImageIO.read(it)
     }
-}.getOrElse {
-    orElse
 }
 
-suspend fun getImageDimensions(url: String?, default: Pair<Int, Int> = 1 to 1): Pair<Int, Int> = runCatching {
-    withContext(IO) {
-        ImageIO.read(URL(url)).run { width to height }
+suspend fun getImageByteArray(url: String?, orElse: ByteArray = ByteArray(0)): ByteArray {
+    return runCatching {
+        REACTIVE_NETTY_HTTP_CLIENT
+                .get()
+                .uri(url)
+                .responseContent()
+                .aggregate()
+                .asByteArray()
+                .awaitStrict()
+    }.getOrElse {
+        orElse
     }
-}.getOrElse {
-    default
+}
+
+suspend fun getImageDimensions(url: String?, default: Pair<Int, Int> = 1 to 1): Pair<Int, Int> {
+    return runCatching {
+        val imageByteArray = getImageByteArray(url)
+        imageByteArray.toBufferedImage().run { width to height }
+    }.getOrElse {
+        default
+    }
 }

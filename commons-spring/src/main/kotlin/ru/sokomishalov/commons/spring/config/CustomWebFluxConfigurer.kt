@@ -33,6 +33,6 @@ open class CustomWebFluxConfigurer : WebFluxConfigurer {
                 .addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
-                .maxAge(3600);
+                .maxAge(3600)
     }
 }

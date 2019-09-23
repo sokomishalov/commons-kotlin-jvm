@@ -2,14 +2,12 @@
 
 package ru.sokomishalov.commons.spring.webclient
 
-import io.netty.handler.ssl.SslContextBuilder
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.netty.http.client.HttpClient
+import ru.sokomishalov.commons.core.http.REACTIVE_NETTY_HTTP_CLIENT
 import ru.sokomishalov.commons.core.serialization.OBJECT_MAPPER
 
 /**
@@ -26,9 +24,5 @@ val REACTIVE_WEB_CLIENT: WebClient = WebClient
                 }
                 .build()
         )
-        .clientConnector(ReactorClientHttpConnector(HttpClient
-                .create()
-                .followRedirect(true)
-                .secure { it.sslContext(SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build()) }
-        ))
+        .clientConnector(ReactorClientHttpConnector(REACTIVE_NETTY_HTTP_CLIENT))
         .build()
