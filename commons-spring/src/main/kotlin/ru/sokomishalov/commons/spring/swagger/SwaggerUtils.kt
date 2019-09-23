@@ -23,6 +23,8 @@ import springfox.documentation.spring.web.plugins.Docket
 fun Docket.customizeDocket(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
+        ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java),
+        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, Mono::class.java),
         title: String = "",
         description: String = "",
         contact: Contact = Contact("Sokolov Mikhael", "https://t.me/sokomishalov", "sokomishalov@mail.ru"),
@@ -38,8 +40,8 @@ fun Docket.customizeDocket(
                 securityScheme != null -> listOf(securityScheme)
                 else -> emptyList()
             })
-            .ignoredParameterTypes(ServerHttpRequest::class.java)
-            .genericModelSubstitutes(ResponseEntity::class.java, Mono::class.java)
+            .ignoredParameterTypes(*ignoredParameterTypes.toTypedArray())
+            .genericModelSubstitutes(*genericModelSubstitutes.toTypedArray())
             .alternateTypeRules(
                     newRule(
                             typeResolver.resolve(Flux::class.java, FilePart::class.java),
