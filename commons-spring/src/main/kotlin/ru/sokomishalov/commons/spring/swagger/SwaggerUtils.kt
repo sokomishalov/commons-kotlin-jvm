@@ -13,7 +13,6 @@ import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.schema.AlternateTypeRules.newRule
 import springfox.documentation.service.Contact
 import springfox.documentation.service.SecurityScheme
-import springfox.documentation.spi.DocumentationType.SWAGGER_2
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
 
@@ -25,13 +24,12 @@ fun Docket.customizeDocket(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
         title: String = "",
+        description: String = "",
         contact: Contact = Contact("Sokolov Mikhael", "https://t.me/sokomishalov", "sokomishalov@mail.ru"),
         version: String = "1.0.0"
 ): Docket {
     val typeResolver = TypeResolver()
-    return Docket(SWAGGER_2)
-            .select()
-            .build()
+    return this
             .securityContexts(when {
                 securityContext != null -> listOf(securityContext)
                 else -> emptyList()
@@ -54,6 +52,7 @@ fun Docket.customizeDocket(
             )
             .apiInfo(ApiInfoBuilder()
                     .title(title)
+                    .description(description)
                     .license("Apache 2.0")
                     .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                     .contact(contact)
