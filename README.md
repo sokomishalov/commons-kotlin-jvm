@@ -1,8 +1,8 @@
 [![](https://jitpack.io/v/sokomishalov/commons.svg)](https://jitpack.io/#sokomishalov/commons)
-# Sokomishalov Commons
+# Kotlin Commons
 
 ## Overview
-Helpers and utilities for jvm languages
+Helpers and utilities for kotlin (or jvm languages)
 
 ## Installation 
 Add jitpack repository:
