@@ -3,12 +3,11 @@
 package ru.sokomishalov.commons.spring.webclient
 
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
-import org.springframework.http.codec.json.Jackson2JsonDecoder
-import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import ru.sokomishalov.commons.core.http.REACTIVE_NETTY_HTTP_CLIENT
-import ru.sokomishalov.commons.core.serialization.OBJECT_MAPPER
+import ru.sokomishalov.commons.spring.serialization.JACKSON_DECODER
+import ru.sokomishalov.commons.spring.serialization.JACKSON_ENCODER
 
 /**
  * @author sokomishalov
@@ -19,8 +18,10 @@ val REACTIVE_WEB_CLIENT: WebClient = WebClient
         .exchangeStrategies(ExchangeStrategies
                 .builder()
                 .codecs {
-                    it.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(OBJECT_MAPPER))
-                    it.defaultCodecs().jackson2JsonDecoder(Jackson2JsonDecoder(OBJECT_MAPPER))
+                    it.defaultCodecs().apply {
+                        jackson2JsonEncoder(JACKSON_ENCODER)
+                        jackson2JsonDecoder(JACKSON_DECODER)
+                    }
                 }
                 .build()
         )
