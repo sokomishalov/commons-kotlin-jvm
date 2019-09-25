@@ -2,7 +2,6 @@
 
 package ru.sokomishalov.commons.spring.cache
 
-import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.await
 import kotlinx.coroutines.future.future
@@ -18,11 +17,11 @@ interface CacheService {
     suspend fun evict(cacheName: String, key: String)
 
 
-    fun <T> getCF(cacheName: String, key: String, orElse: () -> CompletableFuture<T>): CompletableFuture<T> = GlobalScope.future(Unconfined) {
+    fun <T> getCF(cacheName: String, key: String, orElse: () -> CompletableFuture<T>): CompletableFuture<T> = GlobalScope.future {
         get(cacheName, key) { orElse().await() }
     }
 
-    fun evictCF(cacheName: String, key: String) = GlobalScope.future(Unconfined) {
+    fun evictCF(cacheName: String, key: String) = GlobalScope.future {
         evict(cacheName, key)
     }
 }

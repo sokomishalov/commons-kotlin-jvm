@@ -3,7 +3,6 @@
 package ru.sokomishalov.commons.core.reactor
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.flux
@@ -13,6 +12,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ru.sokomishalov.commons.core.common.unit
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import reactor.core.publisher.Mono.empty as monoEmpty
 
 
@@ -21,14 +21,14 @@ import reactor.core.publisher.Mono.empty as monoEmpty
  */
 
 fun <T> aFlux(
-        context: CoroutineContext = Unconfined,
+        context: CoroutineContext = EmptyCoroutineContext,
         block: suspend () -> Iterable<T>
 ): Flux<T> {
     return flux(context) { block().forEach { send(it) } }
 }
 
 fun <T> aMono(
-        context: CoroutineContext = Unconfined,
+        context: CoroutineContext = EmptyCoroutineContext,
         block: suspend CoroutineScope.() -> T?
 ): Mono<T> {
     return mono(context, block)
