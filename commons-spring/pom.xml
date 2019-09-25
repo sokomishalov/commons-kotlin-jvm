@@ -82,9 +82,17 @@
                     <pluginOptions>
                         <option>all-open:annotation=org.springframework.context.annotation.Configuration</option>
                         <option>all-open:annotation=org.springframework.context.annotation.Bean</option>
-                        <option>all-open:annotation=org.springframework.boot.autoconfigure.SpringBootApplication</option>
+                        <option>all-open:annotation=org.springframework.boot.autoconfigure.SpringBootApplication
+                        </option>
                     </pluginOptions>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>compile</id>
