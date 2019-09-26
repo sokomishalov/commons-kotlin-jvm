@@ -14,7 +14,7 @@ import java.time.Duration.ofDays
 fun createDefaultCacheManager(cacheNames: List<String>, expireAfter: Duration = ofDays(1)): CacheManager {
     return SimpleCacheManager().apply {
         setCaches(cacheNames.map {
-            CaffeineCache(it, Caffeine.newBuilder().expireAfterAccess(expireAfter).build())
+            CaffeineCache(it, Caffeine.newBuilder().expireAfterWrite(expireAfter).build())
         })
     }
 }

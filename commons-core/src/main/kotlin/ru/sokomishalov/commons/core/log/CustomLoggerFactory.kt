@@ -19,7 +19,6 @@ object CustomLoggerFactory {
                 .getClassesImplementing(Loggable::class.java.name)
                 .names
                 .forEach { loggersMap[it] = loggerFor(it) }
-
     }
 
     fun <T : Loggable> getLogger(clazz: Class<T>): Logger {

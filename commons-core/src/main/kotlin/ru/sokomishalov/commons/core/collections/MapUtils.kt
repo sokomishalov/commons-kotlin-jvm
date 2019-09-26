@@ -1,6 +1,6 @@
 @file:Suppress("unused", "NOTHING_TO_INLINE")
 
-package ru.sokomishalov.commons.core.maps
+package ru.sokomishalov.commons.core.collections
 
 
 /**

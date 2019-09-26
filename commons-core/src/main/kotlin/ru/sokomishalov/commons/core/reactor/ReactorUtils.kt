@@ -7,7 +7,6 @@ import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.flux
 import kotlinx.coroutines.reactor.mono
-import org.reactivestreams.Publisher
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ru.sokomishalov.commons.core.common.unit
@@ -34,14 +33,14 @@ fun <T> aMono(
     return mono(context, block)
 }
 
-suspend inline fun <T> Flux<T>?.await(): List<T> = this?.collectList().await() ?: emptyList()
+suspend inline fun <reified T> Flux<T>?.await(): List<T> = this?.collectList().await() ?: emptyList()
 
-suspend inline fun <T> Mono<T>?.await(): T? = this?.awaitFirstOrNull()
+suspend inline fun <reified T> Mono<T>?.await(): T? = this?.awaitFirstOrNull()
 
-suspend inline fun <T> Flux<T>?.awaitUnit(): Unit = this.await().unit()
+suspend inline fun <reified T> Flux<T>?.awaitUnit(): Unit = this.await().unit()
 
-suspend inline fun <T> Mono<T>?.awaitUnit(): Unit = this.await().unit()
+suspend inline fun <reified T> Mono<T>?.awaitUnit(): Unit = this.await().unit()
 
-suspend fun <T> Publisher<T>.awaitOrElse(defaultValue: () -> T): T = awaitFirstOrNull() ?: defaultValue()
+suspend inline fun <reified T> Mono<T>.awaitOrElse(defaultValue: () -> T): T = awaitFirstOrNull() ?: defaultValue()
 
-suspend inline fun <T> Mono<T>?.awaitStrict(): T = this?.awaitFirstOrNull() ?: monoEmpty<T>().awaitSingle()
+suspend inline fun <reified T> Mono<T>?.awaitStrict(): T = this?.awaitFirstOrNull() ?: monoEmpty<T>().awaitSingle()
