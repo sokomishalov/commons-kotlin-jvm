@@ -16,9 +16,15 @@
     <properties>
         <kotlin.version>1.3.50</kotlin.version>
         <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
+        <spring.version>5.1.10.RELEASE</spring.version>
         <caffeine.cache>2.8.0</caffeine.cache>
         <springfox.version>2.9.2</springfox.version>
+
+        <mongo-embedded.version>2.2.0</mongo-embedded.version>
+        <mongo-driver.version>3.11.0</mongo-driver.version>
+        <mongo-reactive.version>1.12.0</mongo-reactive.version>
+        <redis-lettuce.version>5.2.0.RELEASE</redis-lettuce.version>
+        <redis-embedded.version>0.7.2</redis-embedded.version>
     </properties>
 
     <dependencies>
@@ -64,10 +70,47 @@
             <version>${springfox.version}</version>
         </dependency>
 
+        <!--  OPTIONAL DEPS  -->
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-reactivestreams</artifactId>
+            <version>${mongo-reactive.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>${redis-lettuce.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!--  TEST DEPS -->
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${mongo-embedded.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.ozimov</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.7.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
@@ -77,14 +120,8 @@
                 <configuration>
                     <jvmTarget>${java.version}</jvmTarget>
                     <compilerPlugins>
-                        <plugin>all-open</plugin>
+                        <plugin>spring</plugin>
                     </compilerPlugins>
-                    <pluginOptions>
-                        <option>all-open:annotation=org.springframework.context.annotation.Configuration</option>
-                        <option>all-open:annotation=org.springframework.context.annotation.Bean</option>
-                        <option>all-open:annotation=org.springframework.boot.autoconfigure.SpringBootApplication
-                        </option>
-                    </pluginOptions>
                 </configuration>
                 <dependencies>
                     <dependency>

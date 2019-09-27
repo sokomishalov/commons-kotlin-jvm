@@ -27,12 +27,12 @@ import java.time.format.DateTimeParseException
 import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
-import ru.sokomishalov.commons.spring.const.INTERNAL_SERVER_ERROR as ISE
 
 open class CustomExceptionHandler : Loggable {
 
     companion object {
         private val messageReaders: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
+        private const val ISE_MESSAGE = "Внутренняя ошибка сервера"
     }
 
     @ExceptionHandler(
@@ -78,7 +78,7 @@ open class CustomExceptionHandler : Loggable {
 
     fun ServerWebExchange.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
         when {
-            status.is5xxServerError -> logError(ISE, e)
+            status.is5xxServerError -> logError(ISE_MESSAGE, e)
             status.is4xxClientError -> logWarn(e)
         }
 

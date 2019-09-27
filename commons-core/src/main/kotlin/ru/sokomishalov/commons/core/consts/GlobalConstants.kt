@@ -9,5 +9,6 @@ import java.time.format.DateTimeFormatter.ofPattern
  * @author sokomishalov
  */
 const val EMPTY = ""
+const val LOCALHOST = "localhost"
 
 val DEFAULT_DATE_FORMATTER: DateTimeFormatter = ofPattern("yyyy-MM-dd HH:mm:ss")
