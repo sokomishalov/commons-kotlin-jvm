@@ -2,6 +2,7 @@
 
 package ru.sokomishalov.commons.spring.cache
 
+import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
 
 
@@ -13,21 +14,17 @@ class CacheManagerService(
         private val cacheManager: CacheManager = createDefaultCacheManager(caches)
 ) : CacheService {
 
-    override suspend fun <T> get(cacheName: String, key: String, orElse: suspend () -> T): T {
-        val cache = cacheManager.getCache(cacheName)
-        val value = cache?.get(key)?.get()
+    private fun getCache(cacheName: String): Cache? = cacheManager.getCache(cacheName)
 
-        return when {
-            value != null -> value as T
-            else -> {
-                val orElseValue = orElse()
-                cache?.put(key, orElseValue)
-                orElseValue
-            }
-        }
+    override suspend fun <T> get(cacheName: String, key: String): T? {
+        return getCache(cacheName)?.get(key)?.get() as T?
+    }
+
+    override suspend fun <T> put(cacheName: String, key: String, value: T) {
+        getCache(cacheName)?.put(key, value)
     }
 
     override suspend fun evict(cacheName: String, key: String) {
-        cacheManager.getCache(cacheName)?.evict(key)
+        getCache(cacheName)?.evict(key)
     }
 }
