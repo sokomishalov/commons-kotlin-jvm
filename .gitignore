@@ -1,5 +1,7 @@
 ### Common ###
 target/
+.gradle
+.m2
 
 ### IntelliJ IDEA ###
 .idea

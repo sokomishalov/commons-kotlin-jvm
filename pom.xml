@@ -43,9 +43,10 @@
                     <configuration>
                         <header>license-header.txt</header>
                         <excludes>
-                            <exclude>LICENSE.txt</exclude>
+                            <exclude>LICENSE.md</exclude>
                             <exclude>*.xml</exclude>
                             <exclude>*.properties</exclude>
+                            <exclude>*.yml</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
