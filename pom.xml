@@ -41,7 +41,7 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>3.0</version>
                     <configuration>
-                        <header>license-header.txt</header>
+                        <header>header.txt</header>
                         <excludes>
                             <exclude>LICENSE.md</exclude>
                             <exclude>*.xml</exclude>
