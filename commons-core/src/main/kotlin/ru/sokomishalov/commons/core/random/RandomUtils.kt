@@ -49,7 +49,6 @@ inline fun <reified T> randomPojoSequence(params: EasyRandomParameters = EASY_RA
 
 fun randomString(
         length: Int = 20,
-        range: IntRange = (length..length),
         useLetters: Boolean = true,
         useDigits: Boolean = false
-): String = random(range.count(), range.first, range.last, useLetters, useDigits)
+): String = random(length, useLetters, useDigits)
