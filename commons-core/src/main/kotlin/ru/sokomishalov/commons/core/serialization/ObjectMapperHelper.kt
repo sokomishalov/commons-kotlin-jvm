@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy.LOWER_CAMEL_CASE
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE
 import com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS
 import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
-import com.fasterxml.jackson.dataformat.csv.CsvFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.guava.GuavaModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -42,8 +41,6 @@ val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
 val SNAKE_CASE_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(namingStrategy = SNAKE_CASE)
 
 val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(YAMLFactory())
-
-val CSV_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(CsvFactory())
 
 fun buildComplexObjectMapper(
         factory: JsonFactory? = null,
