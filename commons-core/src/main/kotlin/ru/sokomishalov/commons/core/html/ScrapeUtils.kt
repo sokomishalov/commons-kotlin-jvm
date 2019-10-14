@@ -56,5 +56,5 @@ fun Element.getImageBackgroundUrl(): String {
 }
 
 fun Element.fixText(): String {
-    return clean(toString(), Whitelist.none())
+    return clean(toString(), Whitelist.simpleText())
 }
