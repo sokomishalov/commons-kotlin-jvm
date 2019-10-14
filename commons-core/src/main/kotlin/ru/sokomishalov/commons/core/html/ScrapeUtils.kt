@@ -17,6 +17,7 @@
 
 package ru.sokomishalov.commons.core.html
 
+import io.netty.handler.codec.http.HttpHeaderNames.USER_AGENT
 import org.jsoup.Jsoup.clean
 import org.jsoup.Jsoup.parse
 import org.jsoup.nodes.Document
@@ -24,22 +25,30 @@ import org.jsoup.nodes.Element
 import org.jsoup.safety.Whitelist
 import ru.sokomishalov.commons.core.http.REACTIVE_NETTY_HTTP_CLIENT
 import ru.sokomishalov.commons.core.reactor.awaitStrict
+import ru.sokomishalov.commons.core.string.isNotNullOrBlank
 import java.nio.charset.StandardCharsets.UTF_8
 
 
 /**
  * @author sokomishalov
  */
-suspend fun getWebPage(url: String): Document {
-    val document = REACTIVE_NETTY_HTTP_CLIENT
+suspend fun getWebPage(
+        url: String,
+        userAgent: String? = null
+): Document {
+    return REACTIVE_NETTY_HTTP_CLIENT
+            .headers {
+                if (userAgent.isNotNullOrBlank()) {
+                    it.set(USER_AGENT, userAgent)
+                }
+            }
             .get()
             .uri(url)
             .responseContent()
             .aggregate()
             .asString(UTF_8)
             .awaitStrict()
-
-    return parse(document)
+            .let { parse(it) }
 }
 
 fun Element.getSingleElementByClass(name: String): Element {
