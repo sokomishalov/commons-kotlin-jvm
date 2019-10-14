@@ -17,42 +17,44 @@
 
 package ru.sokomishalov.commons.core.html
 
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
-import org.jsoup.Jsoup
+import org.jsoup.Jsoup.clean
 import org.jsoup.Jsoup.parse
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.jsoup.safety.Whitelist
+import ru.sokomishalov.commons.core.http.REACTIVE_NETTY_HTTP_CLIENT
+import ru.sokomishalov.commons.core.reactor.awaitStrict
+import java.nio.charset.StandardCharsets.UTF_8
 
 
 /**
  * @author sokomishalov
  */
+suspend fun getWebPage(url: String): Document {
+    val document = REACTIVE_NETTY_HTTP_CLIENT
+            .get()
+            .uri(url)
+            .responseContent()
+            .aggregate()
+            .asString(UTF_8)
+            .awaitStrict()
 
-suspend fun getWebPage(url: String): Document = withContext(IO) {
-    Jsoup.connect(url).get()
+    return parse(document)
 }
 
 fun Element.getSingleElementByClass(name: String): Element {
     return getElementsByClass(name).first()
 }
 
-fun Element.getImageBackgroundUrl(): String {
-    return attr("style")
-            .run { substring(indexOf("http"), indexOf(")")) }
+fun Element.getSingleElementByTag(name: String): Element {
+    return getElementsByTag(name).first()
 }
 
-suspend fun Element.fixText(): String {
-    val titleDoc = withContext(IO) {
-        parse(html())
-    }
+fun Element.getImageBackgroundUrl(): String {
+    val style = attr("style")
+    return style.substring(style.indexOf("http"), style.indexOf(")"))
+}
 
-    val allAnchors = titleDoc.select("a")
-    val twitterAnchors = titleDoc.select("a[href^=/]")
-    val unwantedAnchors = ArrayList<Element>()
-
-    allAnchors.filterNotTo(unwantedAnchors) { twitterAnchors.contains(it) }
-    unwantedAnchors.forEach { it.remove() }
-
-    return titleDoc.text()
+fun Element.fixText(): String {
+    return clean(toString(), Whitelist.none())
 }

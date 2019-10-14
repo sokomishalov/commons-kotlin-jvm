@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("UNCHECKED_CAST", "unused")
+
 package ru.sokomishalov.commons.spring.cache
 
 import com.github.benmanes.caffeine.cache.Caffeine
@@ -31,5 +33,20 @@ fun createDefaultCacheManager(cacheNames: List<String>, expireAfter: Duration = 
         setCaches(cacheNames.map {
             CaffeineCache(it, Caffeine.newBuilder().expireAfterWrite(expireAfter).build())
         })
+    }
+}
+
+fun <V> CacheManager.put(cacheName: String, key: String, value: V?) {
+    getCache(cacheName)?.put(key, value)
+}
+
+fun CacheManager.evict(cacheName: String, key: String) {
+    getCache(cacheName)?.evict(key)
+}
+
+fun <V> CacheManager.get(cacheName: String, key: String): V? {
+    return when (val value = getCache(cacheName)?.get(key)?.get()) {
+        null -> null
+        else -> value as V
     }
 }

@@ -79,8 +79,6 @@ fun Docket.customizeDocket(
         .apiInfo(ApiInfoBuilder()
                 .title(title)
                 .description(description)
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .contact(contact)
                 .version(version)
                 .build()
