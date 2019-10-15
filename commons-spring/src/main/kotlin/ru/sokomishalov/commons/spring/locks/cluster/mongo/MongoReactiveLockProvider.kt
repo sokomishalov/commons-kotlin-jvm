@@ -28,6 +28,7 @@ import com.mongodb.reactivestreams.client.MongoCollection
 import kotlinx.coroutines.reactive.awaitFirstOrElse
 import kotlinx.coroutines.reactive.awaitSingle
 import org.bson.Document
+import org.springframework.boot.autoconfigure.mongo.MongoProperties
 import ru.sokomishalov.commons.core.common.unit
 import ru.sokomishalov.commons.spring.locks.cluster.LockInfo
 import ru.sokomishalov.commons.spring.locks.cluster.LockProvider
@@ -39,7 +40,8 @@ import java.util.*
 
 class MongoReactiveLockProvider(
         private val client: MongoClient = MongoClients.create(),
-        private val databaseName: String = DEFAULT_DB_NAME,
+        private val mongoProperties: MongoProperties? = null,
+        private val databaseName: String = mongoProperties?.mongoClientDatabase ?: DEFAULT_DB_NAME,
         private val collectionName: String = DEFAULT_COLLECTION_NAME
 ) : LockProvider {
 
