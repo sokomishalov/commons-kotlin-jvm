@@ -33,6 +33,7 @@ import springfox.documentation.service.SecurityScheme
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
 import java.net.URI.create
+import kotlin.coroutines.Continuation
 
 /**
  * @author sokomishalov
@@ -49,11 +50,11 @@ fun RouterFunctionDsl.redirectRootToSwagger() {
 fun Docket.customizeDocket(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
-        ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java),
+        ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),
         genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java),
         title: String = EMPTY,
         description: String = EMPTY,
-        contact: Contact = Contact("Sokolov Mikhael", "https://t.me/sokomishalov", "sokomishalov@mail.ru"),
+        contact: Contact = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru"),
         version: String = "1.0.0"
 ): Docket = this
         .securityContexts(when {
