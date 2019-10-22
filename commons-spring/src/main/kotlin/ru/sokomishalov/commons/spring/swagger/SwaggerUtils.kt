@@ -52,38 +52,42 @@ fun Docket.customizeDocket(
         securityScheme: SecurityScheme? = null,
         ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),
         genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java),
+        useDefaultResponseMessages: Boolean = false,
         title: String = EMPTY,
         description: String = EMPTY,
         contact: Contact = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru"),
         version: String = "1.0.0"
-): Docket = this
-        .securityContexts(when {
-            securityContext != null -> listOf(securityContext)
-            else -> emptyList()
-        })
-        .securitySchemes(when {
-            securityScheme != null -> listOf(securityScheme)
-            else -> emptyList()
-        })
-        .ignoredParameterTypes(*ignoredParameterTypes.toTypedArray())
-        .genericModelSubstitutes(*genericModelSubstitutes.toTypedArray())
-        .alternateTypeRules(
-                newRule(
-                        TYPE_RESOLVER.resolve(Flux::class.java, FilePart::class.java),
-                        TYPE_RESOLVER.resolve(List::class.java, MultipartFile::class.java)
-                ),
-                newRule(
-                        TYPE_RESOLVER.resolve(Mono::class.java, FilePart::class.java),
-                        TYPE_RESOLVER.resolve(MultipartFile::class.java)
-                )
-        )
-        .apiInfo(ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .contact(contact)
-                .version(version)
-                .build()
-        )
+): Docket {
+    return this
+            .useDefaultResponseMessages(useDefaultResponseMessages)
+            .securityContexts(when {
+                securityContext != null -> listOf(securityContext)
+                else -> emptyList()
+            })
+            .securitySchemes(when {
+                securityScheme != null -> listOf(securityScheme)
+                else -> emptyList()
+            })
+            .ignoredParameterTypes(*ignoredParameterTypes.toTypedArray())
+            .genericModelSubstitutes(*genericModelSubstitutes.toTypedArray())
+            .alternateTypeRules(
+                    newRule(
+                            TYPE_RESOLVER.resolve(Flux::class.java, FilePart::class.java),
+                            TYPE_RESOLVER.resolve(List::class.java, MultipartFile::class.java)
+                    ),
+                    newRule(
+                            TYPE_RESOLVER.resolve(Mono::class.java, FilePart::class.java),
+                            TYPE_RESOLVER.resolve(MultipartFile::class.java)
+                    )
+            )
+            .apiInfo(ApiInfoBuilder()
+                    .title(title)
+                    .description(description)
+                    .contact(contact)
+                    .version(version)
+                    .build()
+            )
+}
 
 
 private val TYPE_RESOLVER = TypeResolver()
