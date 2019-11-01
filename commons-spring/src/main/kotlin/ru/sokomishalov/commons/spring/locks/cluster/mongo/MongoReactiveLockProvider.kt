@@ -39,8 +39,8 @@ import java.util.*
  */
 
 class MongoReactiveLockProvider(
-        private val client: MongoClient = MongoClients.create(),
         private val mongoProperties: MongoProperties? = null,
+        private val client: MongoClient = MongoClients.create(),
         private val databaseName: String = mongoProperties?.mongoClientDatabase ?: DEFAULT_DB_NAME,
         private val collectionName: String = DEFAULT_COLLECTION_NAME
 ) : LockProvider {

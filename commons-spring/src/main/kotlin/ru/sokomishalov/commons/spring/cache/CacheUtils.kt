@@ -17,21 +17,27 @@
 
 package ru.sokomishalov.commons.spring.cache
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.Caffeine.newBuilder
 import org.springframework.cache.CacheManager
-import org.springframework.cache.caffeine.CaffeineCache
-import org.springframework.cache.support.SimpleCacheManager
+import org.springframework.cache.caffeine.CaffeineCacheManager
 import java.time.Duration
-import java.time.Duration.ofDays
 
 /**
  * @author sokomishalov
  */
 
-fun createDefaultCacheManager(cacheNames: List<String>, expireAfter: Duration = ofDays(1)): CacheManager {
-    return SimpleCacheManager().apply {
-        setCaches(cacheNames.map {
-            CaffeineCache(it, Caffeine.newBuilder().expireAfterWrite(expireAfter).build())
+fun createDefaultCacheManager(
+        cacheNames: List<String>,
+        expireAfterWrite: Duration? = null,
+        expireAfterAccess: Duration? = null
+): CacheManager {
+    return CaffeineCacheManager().apply {
+        setCacheNames(cacheNames)
+        setCaffeine(newBuilder().apply {
+            when {
+                expireAfterWrite != null -> expireAfterWrite(expireAfterWrite)
+                expireAfterAccess != null -> expireAfterAccess(expireAfterAccess)
+            }
         })
     }
 }

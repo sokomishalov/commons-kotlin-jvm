@@ -19,7 +19,6 @@ import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.SetArgs
 import io.lettuce.core.api.StatefulRedisConnection
-import ru.sokomishalov.commons.core.consts.EMPTY
 import ru.sokomishalov.commons.core.consts.LOCALHOST
 import ru.sokomishalov.commons.core.reactor.await
 import ru.sokomishalov.commons.core.reactor.awaitUnit
@@ -34,13 +33,9 @@ import java.time.ZonedDateTime.now
 class RedisLettuceLockProvider(
         private val client: RedisClient = RedisClient.create(RedisURI.create(LOCALHOST)),
         private val connection: StatefulRedisConnection<String, String> = client.connect(),
-        private val keyPrefix: String = EMPTY,
-        private val keyDelimiter: String = DEFAULT_KEY_DELIMITER
+        private val keyPrefix: String = "",
+        private val keyDelimiter: String = ":"
 ) : LockProvider {
-
-    companion object {
-        private const val DEFAULT_KEY_DELIMITER = ":"
-    }
 
     override suspend fun tryLock(lockInfo: LockInfo): Boolean {
         val keyValue = lockInfo.buildKeyValue()
