@@ -43,8 +43,7 @@ class RedisClusterLockTest : AbstractClusterLockTest() {
         get() = lettuceLockProvider
 
     @After
-    override fun tearDown() {
-        super.tearDown()
+    fun tearDown() {
         redisServer.stop()
     }
 }

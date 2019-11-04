@@ -37,6 +37,6 @@ class MongoReactiveAutoConfiguration {
     @ConditionalOnMissingBean(LockProvider::class)
     @ConditionalOnBean(MongoClient::class)
     fun reactiveMongoClusterLockProvider(client: MongoClient): LockProvider =
-            MongoReactiveLockProvider(client)
+            MongoReactiveLockProvider(client = client)
 
 }

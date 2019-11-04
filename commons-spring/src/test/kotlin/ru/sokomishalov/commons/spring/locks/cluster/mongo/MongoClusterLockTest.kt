@@ -55,7 +55,7 @@ class MongoClusterLockTest : AbstractClusterLockTest() {
                 )
                 .start()
 
-        client = MongoReactiveLockProvider(MongoClients.create("mongodb://$LOCALHOST:$randomPort/$DATABASE"))
+        client = MongoReactiveLockProvider(client = MongoClients.create("mongodb://$LOCALHOST:$randomPort/$DATABASE"))
     }
 
 
@@ -63,8 +63,7 @@ class MongoClusterLockTest : AbstractClusterLockTest() {
         get() = client
 
     @After
-    override fun tearDown() {
-        super.tearDown()
+    fun tearDown() {
         mongoDaemon.stop()
     }
 }

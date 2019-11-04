@@ -16,7 +16,6 @@
 package ru.sokomishalov.commons.spring.locks.cluster
 
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.Duration.ofMinutes
@@ -57,7 +56,4 @@ abstract class AbstractClusterLockTest {
 
         assertEquals(iterations, counter.get())
     }
-
-    @After
-    open fun tearDown() = Unit
 }
