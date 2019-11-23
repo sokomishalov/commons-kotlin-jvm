@@ -26,7 +26,7 @@
         <reactor-addons.version>3.3.0.RELEASE</reactor-addons.version>
         <slf4j.version>1.7.29</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <easy-random.version>4.0.0</easy-random.version>
+        <easy-random.version>4.1.0</easy-random.version>
         <classgraph.version>4.8.54</classgraph.version>
         <jsoup.version>1.12.1</jsoup.version>
     </properties>
