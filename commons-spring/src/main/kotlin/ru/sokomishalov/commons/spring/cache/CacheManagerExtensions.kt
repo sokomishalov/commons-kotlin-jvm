@@ -13,27 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ru.sokomishalov.commons.core.log
+@file:Suppress("UNCHECKED_CAST", "unused")
 
-import org.slf4j.Logger
-import java.util.concurrent.ConcurrentHashMap
+package ru.sokomishalov.commons.spring.cache
+
+import org.springframework.cache.CacheManager
 
 /**
  * @author sokomishalov
  */
-object CustomLoggerFactory {
 
-    private val loggersMap: MutableMap<String, Logger> = ConcurrentHashMap()
+fun <V> CacheManager.put(cacheName: String, key: String, value: V?) {
+    getCache(cacheName)?.put(key, value)
+}
 
-    fun <T : Loggable> getLogger(clazz: Class<T>): Logger {
-        val logger = loggersMap[clazz.name]
-        return when {
-            logger != null -> logger
-            else -> {
-                val newLogger = loggerFor(clazz)
-                loggersMap[clazz.name] = newLogger
-                newLogger
-            }
-        }
+operator fun <V> CacheManager.set(cacheName: String, key: String, value: V?) {
+    put(cacheName, key, value)
+}
+
+fun CacheManager.evict(cacheName: String, key: String) {
+    getCache(cacheName)?.evict(key)
+}
+
+operator fun <V> CacheManager.get(cacheName: String, key: String): V? {
+    return when (val value = getCache(cacheName)?.get(key)?.get()) {
+        null -> null
+        else -> value as V
     }
 }

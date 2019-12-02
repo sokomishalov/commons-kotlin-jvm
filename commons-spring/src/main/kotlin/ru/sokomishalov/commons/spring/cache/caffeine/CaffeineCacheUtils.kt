@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("UNCHECKED_CAST", "unused")
 
-package ru.sokomishalov.commons.spring.cache
+@file:Suppress("unused")
+
+package ru.sokomishalov.commons.spring.cache.caffeine
 
 import com.github.benmanes.caffeine.cache.Caffeine.newBuilder
 import org.springframework.cache.CacheManager
@@ -26,7 +27,7 @@ import java.time.Duration
  * @author sokomishalov
  */
 
-fun createDefaultCacheManager(
+fun createDefaultCaffeineCacheManager(
         cacheNames: List<String>,
         expireAfterWrite: Duration? = null,
         expireAfterAccess: Duration? = null
@@ -39,20 +40,5 @@ fun createDefaultCacheManager(
                 expireAfterAccess != null -> expireAfterAccess(expireAfterAccess)
             }
         })
-    }
-}
-
-fun <V> CacheManager.put(cacheName: String, key: String, value: V?) {
-    getCache(cacheName)?.put(key, value)
-}
-
-fun CacheManager.evict(cacheName: String, key: String) {
-    getCache(cacheName)?.evict(key)
-}
-
-fun <V> CacheManager.get(cacheName: String, key: String): V? {
-    return when (val value = getCache(cacheName)?.get(key)?.get()) {
-        null -> null
-        else -> value as V
     }
 }

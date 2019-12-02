@@ -7,11 +7,11 @@
     <parent>
         <groupId>ru.sokomishalov.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>1.0.24</version>
+        <version>1.0.25</version>
     </parent>
 
     <artifactId>commons-spring</artifactId>
-    <version>1.0.24</version>
+    <version>1.0.25</version>
 
     <properties>
         <kotlin.version>1.3.61</kotlin.version>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-core</artifactId>
-            <version>1.0.24</version>
+            <version>1.0.25</version>
         </dependency>
 
         <dependency>
@@ -42,35 +42,45 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webflux</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
+            <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
+        <!--  OPTIONAL DEPS  -->
+
         <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <version>${caffeine.cache}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <version>${spring.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox.version}</version>
+            <optional>true</optional>
         </dependency>
 
-        <!--  OPTIONAL DEPS  -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>${caffeine.cache}</version>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -78,6 +88,7 @@
             <version>${mongo-reactive.version}</version>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>io.lettuce</groupId>
             <artifactId>lettuce-core</artifactId>

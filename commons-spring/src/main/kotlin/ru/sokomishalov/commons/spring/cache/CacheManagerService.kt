@@ -19,6 +19,7 @@ package ru.sokomishalov.commons.spring.cache
 
 import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager
 import ru.sokomishalov.commons.core.common.unit
 
 
@@ -27,7 +28,7 @@ import ru.sokomishalov.commons.core.common.unit
  */
 class CacheManagerService(
         private val caches: List<String> = emptyList(),
-        private val cacheManager: CacheManager = createDefaultCacheManager(caches)
+        private val cacheManager: CacheManager = ConcurrentMapCacheManager(*caches.toTypedArray())
 ) : CacheService {
 
     private fun getCache(cacheName: String): Cache? = cacheManager.getCache(cacheName)

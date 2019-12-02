@@ -24,11 +24,9 @@ import com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUM
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LOWER_CAMEL_CASE
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE
 import com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS
 import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.datatype.guava.GuavaModule
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
@@ -38,10 +36,6 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  */
 val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
 
-val SNAKE_CASE_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(namingStrategy = SNAKE_CASE)
-
-val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(YAMLFactory())
-
 fun buildComplexObjectMapper(
         factory: JsonFactory? = null,
         namingStrategy: PropertyNamingStrategy = LOWER_CAMEL_CASE
@@ -49,7 +43,7 @@ fun buildComplexObjectMapper(
     return ObjectMapper(factory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
-            .registerModule(GuavaModule())
+            .registerModule(Jdk8Module())
             .enable(
                     READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
                     ACCEPT_SINGLE_VALUE_AS_ARRAY,

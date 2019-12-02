@@ -15,7 +15,7 @@
  */
 @file:Suppress("unused")
 
-package ru.sokomishalov.commons.spring.reactive
+package ru.sokomishalov.commons.spring.web
 
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext

@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.reactive.function.server.RouterFunctionDsl
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ru.sokomishalov.commons.core.consts.EMPTY
@@ -32,7 +31,6 @@ import springfox.documentation.service.Contact
 import springfox.documentation.service.SecurityScheme
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
-import java.net.URI.create
 import kotlin.coroutines.Continuation
 
 /**
@@ -40,14 +38,9 @@ import kotlin.coroutines.Continuation
  */
 
 const val SWAGGER_UI_PAGE = "swagger-ui.html"
-
 const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
 
-fun RouterFunctionDsl.redirectRootToSwagger() {
-    (GET("/") or POST("/")) { permanentRedirect(create("/${SWAGGER_UI_PAGE}")).build() }
-}
-
-fun Docket.customizeDocket(
+fun Docket.customize(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
         ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),

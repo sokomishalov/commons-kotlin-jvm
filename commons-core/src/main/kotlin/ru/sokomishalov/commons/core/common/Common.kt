@@ -21,4 +21,6 @@ package ru.sokomishalov.commons.core.common
 /**
  * @author sokomishalov
  */
-fun Any?.unit() {}
+fun Any?.unit(): Unit = Unit
+
+fun Any?.void(): Void? = null

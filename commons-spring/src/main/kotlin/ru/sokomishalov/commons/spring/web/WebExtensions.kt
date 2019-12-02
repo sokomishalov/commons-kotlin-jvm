@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ru.sokomishalov.commons.core.log
+@file:Suppress("unused")
 
-import org.slf4j.Logger
-import java.util.concurrent.ConcurrentHashMap
+package ru.sokomishalov.commons.spring.web
 
 /**
  * @author sokomishalov
  */
-object CustomLoggerFactory {
 
-    private val loggersMap: MutableMap<String, Logger> = ConcurrentHashMap()
+import org.springframework.http.ResponseEntity
 
-    fun <T : Loggable> getLogger(clazz: Class<T>): Logger {
-        val logger = loggersMap[clazz.name]
-        return when {
-            logger != null -> logger
-            else -> {
-                val newLogger = loggerFor(clazz)
-                loggersMap[clazz.name] = newLogger
-                newLogger
-            }
-        }
-    }
+/**
+ * @author sokomishalov
+ */
+
+inline fun <reified T> T?.toResponseEntity(): ResponseEntity<T> = when {
+    this == null -> ResponseEntity.ok().build()
+    else -> ResponseEntity.ok(this)
 }

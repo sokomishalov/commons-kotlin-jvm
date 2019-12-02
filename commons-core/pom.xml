@@ -7,11 +7,11 @@
     <parent>
         <groupId>ru.sokomishalov.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>1.0.24</version>
+        <version>1.0.25</version>
     </parent>
 
     <artifactId>commons-core</artifactId>
-    <version>1.0.24</version>
+    <version>1.0.25</version>
 
     <properties>
         <kotlin.version>1.3.61</kotlin.version>
@@ -27,12 +27,12 @@
         <slf4j.version>1.7.29</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <easy-random.version>4.1.0</easy-random.version>
-        <classgraph.version>4.8.57</classgraph.version>
         <jsoup.version>1.12.1</jsoup.version>
     </properties>
 
 
     <dependencies>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -42,11 +42,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-coroutines-core-common</artifactId>
-            <version>${kotlinx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
@@ -79,22 +74,7 @@
             <artifactId>reactor-netty</artifactId>
             <version>${reactor-netty.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.projectreactor.addons</groupId>
-            <artifactId>reactor-extra</artifactId>
-            <version>${reactor-addons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.projectreactor.addons</groupId>
-            <artifactId>reactor-adapter</artifactId>
-            <version>${reactor.version}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -115,49 +95,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-guava</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${commons-collections.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.classgraph</groupId>
-            <artifactId>classgraph</artifactId>
-            <version>${classgraph.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jeasy</groupId>
-            <artifactId>easy-random-core</artifactId>
-            <version>${easy-random.version}</version>
         </dependency>
 
         <dependency>
@@ -166,14 +108,31 @@
             <version>${slf4j.version}</version>
         </dependency>
 
+        <!--  OPTIONAL DEPS  -->
+
+        <dependency>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-core</artifactId>
+            <version>${easy-random.version}</version>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
+            <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+            <optional>true</optional>
+        </dependency>
 
         <!--  TEST DEPS  -->
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

@@ -23,7 +23,7 @@ package ru.sokomishalov.commons.spring.cache
 interface CacheService {
 
     companion object {
-        const val DEFAULT_CACHE = "COMMON_CACHE"
+        const val DEFAULT_CACHE = "DEFAULT"
     }
 
     suspend fun <T> get(cacheName: String = DEFAULT_CACHE, key: String): T?

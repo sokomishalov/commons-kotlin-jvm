@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 @file:Suppress("unused")
 
-package ru.sokomishalov.commons.spring.common
+package ru.sokomishalov.commons.spring.swagger
 
-import org.springframework.http.ResponseEntity
 
 /**
  * @author sokomishalov
  */
+import org.springframework.web.reactive.function.server.RouterFunctionDsl
+import java.net.URI.create
 
-inline fun <reified T> T?.toResponseEntity(): ResponseEntity<T> = when {
-    this == null -> ResponseEntity.ok().build()
-    else -> ResponseEntity.ok(this)
+fun RouterFunctionDsl.redirectRootToSwagger() {
+    (GET("/") or POST("/")) { permanentRedirect(create("/${SWAGGER_UI_PAGE}")).build() }
 }
