@@ -19,6 +19,7 @@ package ru.sokomishalov.commons.core.io
 
 import java.io.File
 import java.io.InputStream
+import java.io.RandomAccessFile
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import kotlin.Int.Companion.MAX_VALUE
@@ -47,4 +48,9 @@ fun File.listFilesDeep(filter: (File) -> Boolean = { true }): List<File> {
             .maxDepth(MAX_VALUE)
             .filter { it.isFile && filter(it) }
             .toList()
+}
+
+fun File.isArchive(): Boolean {
+    val fileSignature = runCatching { RandomAccessFile(this, "r").use { raf -> raf.readInt() } }.getOrNull()
+    return fileSignature in listOf(0x504B0304, 0x504B0506, 0x504B0708)
 }
