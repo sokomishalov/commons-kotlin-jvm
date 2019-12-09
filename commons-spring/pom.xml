@@ -15,7 +15,7 @@
 
     <properties>
         <kotlin.version>1.3.61</kotlin.version>
-        <spring.boot.version>2.2.1.RELEASE</spring.boot.version>
+        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
         <spring.version>5.2.2.RELEASE</spring.version>
         <caffeine.cache>2.8.0</caffeine.cache>
         <springfox.version>2.9.2</springfox.version>
