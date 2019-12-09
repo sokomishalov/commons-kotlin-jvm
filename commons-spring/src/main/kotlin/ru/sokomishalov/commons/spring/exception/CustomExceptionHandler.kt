@@ -43,9 +43,9 @@ import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 
-open class CustomExceptionHandler : Loggable {
+open class CustomExceptionHandler {
 
-    companion object {
+    companion object : Loggable {
         private val messageReaders: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
         private const val ISE_MESSAGE = "Внутренняя ошибка сервера"
     }
