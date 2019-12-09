@@ -24,19 +24,33 @@ import org.slf4j.Logger
  */
 interface Loggable {
 
-    private val log: Logger get() = CustomLoggerFactory.getLogger(javaClass)
+    val logger: Logger get() = CustomLoggerFactory.getLogger(javaClass)
 
-    fun log(s: String?) = log.info(s)
+    fun log(s: String?) = logger.info(s)
 
-    fun logInfo(s: String?) = log.info(s)
+    fun log(lazyMessage: () -> String) = logger.info(lazyMessage)
 
-    fun logDebug(s: String?) = log.debug(s)
+    fun logInfo(s: String?) = logger.info(s)
+
+    fun logInfo(lazyMessage: () -> String) = logger.info(lazyMessage())
+
+    fun logDebug(s: String?) = logger.debug(s)
+
+    fun logDebug(lazyMessage: () -> String) = logger.debug(lazyMessage)
 
     fun logWarn(t: Throwable) = logWarn(t.message)
 
-    fun logWarn(message: String?) = log.warn(message)
+    fun logWarn(message: String?) = logger.warn(message)
+
+    fun logWarn(lazyMessage: () -> String) = logger.warn(lazyMessage)
+
+    fun logTrace(message: String?) = logger.trace(message)
+
+    fun logTrace(lazyMessage: () -> String) = logger.trace(lazyMessage)
 
     fun logError(t: Throwable) = logError(t.message, t)
 
-    fun logError(message: String?, t: Throwable) = log.error(message, t)
+    fun logError(message: String?, t: Throwable) = logger.error(message, t)
+
+    fun logError(t: Throwable, lazyMessage: () -> String) = logger.error(t, lazyMessage)
 }

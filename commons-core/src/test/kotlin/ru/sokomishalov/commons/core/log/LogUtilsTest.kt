@@ -38,8 +38,11 @@ class LogWithInterface : Loggable {
 }
 
 class LogWithDelegate {
-    private val log by loggerDelegate()
+
+    companion object : Loggable
+
     fun doJob() {
-        log.info("test")
+        logInfo { "kek" }
+        logger.debug("lek")
     }
 }
