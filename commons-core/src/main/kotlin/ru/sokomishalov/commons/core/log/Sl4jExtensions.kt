@@ -29,4 +29,4 @@ fun Logger.warn(lazyMessage: () -> String?) = if (isWarnEnabled) warn(lazyMessag
 
 fun Logger.trace(lazyMessage: () -> String?) = if (isTraceEnabled) trace(lazyMessage()) else Unit
 
-fun Logger.error(throwable: Throwable, lazyMessage: () -> String?) = if (isErrorEnabled) error(lazyMessage(), throwable) else Unit
+fun Logger.error(throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) = if (isErrorEnabled) error(lazyMessage(), throwable) else Unit
