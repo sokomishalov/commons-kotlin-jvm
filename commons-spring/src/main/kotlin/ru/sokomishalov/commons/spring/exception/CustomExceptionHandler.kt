@@ -93,7 +93,7 @@ open class CustomExceptionHandler {
 
     fun ServerWebExchange.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
         when {
-            status.is5xxServerError -> logError(ISE_MESSAGE, e)
+            status.is5xxServerError -> logError(e, ISE_MESSAGE)
             status.is4xxClientError -> logWarn(e)
         }
 
