@@ -17,16 +17,17 @@
 
 package ru.sokomishalov.commons.core.io
 
+import java.io.File
 import java.io.InputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
-import org.apache.commons.io.IOUtils.toByteArray as iOUtilsToByteArray
+import kotlin.Int.Companion.MAX_VALUE
 
 /**
  * @author sokomishalov
  */
 
-fun InputStream.toByteArray(): ByteArray = iOUtilsToByteArray(this)
+fun InputStream.toByteArray(): ByteArray = readBytes()
 
 fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<ZipEntry> {
     override fun iterator(): Iterator<ZipEntry> = object : Iterator<ZipEntry> {
@@ -39,4 +40,11 @@ fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<Z
 
         override operator fun next(): ZipEntry = next ?: throw NoSuchElementException()
     }
+}
+
+fun File.listFilesDeep(filter: (File) -> Boolean = { true }): List<File> {
+    return walkTopDown()
+            .maxDepth(MAX_VALUE)
+            .filter { it.isFile && filter(it) }
+            .toList()
 }
