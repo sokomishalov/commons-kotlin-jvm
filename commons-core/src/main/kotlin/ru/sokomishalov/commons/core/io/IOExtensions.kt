@@ -17,9 +17,7 @@
 
 package ru.sokomishalov.commons.core.io
 
-import java.io.File
-import java.io.InputStream
-import java.io.RandomAccessFile
+import java.io.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -44,6 +42,31 @@ fun File.zipFiles(filesMap: Map<String, ByteArray>) {
             }
         }
     }
+}
+
+fun File.unzipTo(folder: File) {
+    if (folder.exists().not()) folder.mkdir()
+
+    FileInputStream(this).use { fis ->
+        ZipInputStream(fis).use { zis ->
+            zis.toIterableEntries().forEach { ze ->
+                val newFile = File("${folder.path}/${ze.name}")
+                when {
+                    ze.isDirectory -> newFile.mkdirs()
+                    else -> {
+                        newFile.parentFile.mkdir()
+                        FileOutputStream(newFile).use { fos ->
+                            zis.copyTo(fos)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun File.unzipTo(path: String) {
+    unzipTo(File(path))
 }
 
 fun File.listFilesDeep(filter: (File) -> Boolean = { true }): List<File> {
