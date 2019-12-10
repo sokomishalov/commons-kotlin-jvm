@@ -28,6 +28,9 @@
     </properties>
 
     <dependencies>
+
+        <!--  COMPILE DEPS  -->
+
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-core</artifactId>

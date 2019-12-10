@@ -23,5 +23,5 @@ package ru.sokomishalov.commons.core.collections
  */
 
 infix fun <K, V> Map<K, V>.containsEntryFrom(other: Map<K, V>): Boolean {
-    return this.entries.intersect(other.entries).isNullOrEmpty().not()
+    return entries.intersect(other.entries).isNullOrEmpty().not()
 }
