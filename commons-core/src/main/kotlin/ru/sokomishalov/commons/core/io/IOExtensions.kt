@@ -45,7 +45,7 @@ fun File.zipFiles(filesMap: Map<String, ByteArray>) {
 }
 
 fun File.unzipTo(folder: File) {
-    if (folder.exists().not()) folder.mkdir()
+    if (folder.exists().not()) folder.mkdirs()
 
     FileInputStream(this).use { fis ->
         ZipInputStream(fis).use { zis ->
