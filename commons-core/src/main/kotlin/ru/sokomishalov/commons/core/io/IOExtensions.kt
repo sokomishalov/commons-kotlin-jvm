@@ -31,18 +31,7 @@ import kotlin.Int.Companion.MAX_VALUE
 
 fun InputStream.toByteArray(): ByteArray = readBytes()
 
-fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<ZipEntry> {
-    override fun iterator(): Iterator<ZipEntry> = object : Iterator<ZipEntry> {
-        var next: ZipEntry? = null
-
-        override operator fun hasNext(): Boolean {
-            next = nextEntry
-            return next != null
-        }
-
-        override operator fun next(): ZipEntry = next ?: throw NoSuchElementException()
-    }
-}
+fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = ZipIterable(this)
 
 fun File.zipFiles(filesMap: Map<String, ByteArray>) {
     outputStream().use { fos ->
