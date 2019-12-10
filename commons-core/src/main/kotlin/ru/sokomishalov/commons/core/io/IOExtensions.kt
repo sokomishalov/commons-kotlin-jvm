@@ -22,6 +22,7 @@ import java.io.InputStream
 import java.io.RandomAccessFile
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 import kotlin.Int.Companion.MAX_VALUE
 
 /**
@@ -40,6 +41,19 @@ fun ZipInputStream.toIterableEntries(): Iterable<ZipEntry> = object : Iterable<Z
         }
 
         override operator fun next(): ZipEntry = next ?: throw NoSuchElementException()
+    }
+}
+
+fun File.zipFiles(filesMap: Map<String, ByteArray>) {
+    outputStream().use { fos ->
+        ZipOutputStream(fos).use { zos ->
+            filesMap.forEach { (name, bytes) ->
+                val file = File(name)
+                val entry = ZipEntry(file.name)
+                zos.putNextEntry(entry)
+                zos.write(bytes)
+            }
+        }
     }
 }
 
