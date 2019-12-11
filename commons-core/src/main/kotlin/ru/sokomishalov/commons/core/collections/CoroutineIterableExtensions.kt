@@ -49,7 +49,7 @@ suspend inline fun <T, R> Iterable<T>.aMap(
 suspend inline fun <T, R> Iterable<T>.aFlatMap(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        crossinline transform: suspend CoroutineScope.(T) -> Iterable<R>
+        noinline transform: suspend CoroutineScope.(T) -> Iterable<R>
 ): List<R> = withContext(context) {
     val destination = mutableListOf<R>()
     map { async { destination.addAll(transform(it)) } }.awaitAll()
@@ -59,7 +59,7 @@ suspend inline fun <T, R> Iterable<T>.aFlatMap(
 suspend inline fun <T> Iterable<T>.aFilter(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        crossinline predicate: suspend CoroutineScope.(T) -> Boolean
+        noinline predicate: suspend CoroutineScope.(T) -> Boolean
 ): List<T> = withContext(context) {
     val destination = mutableListOf<T>()
     map { async { if (predicate(it)) destination.add(it) } }.awaitAll()

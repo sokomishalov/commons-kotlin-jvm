@@ -17,7 +17,23 @@
 
 package ru.sokomishalov.commons.core.collections
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
+import ru.sokomishalov.commons.core.common.unit
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+
 
 /**
  * @author sokomishalov
  */
+
+suspend inline fun <K, V> Map<out K, V>.aForEach(
+        scope: CoroutineScope? = null,
+        context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
+        noinline block: suspend CoroutineScope.(Map.Entry<K, V>) -> Unit
+): Unit = withContext(context) {
+    map { async { block(it) } }.awaitAll().unit()
+}

@@ -22,7 +22,5 @@ package ru.sokomishalov.commons.core.collections
  */
 
 inline fun <reified K, V> Iterable<Map<K, V>>.toMap(): Map<K, V> {
-    return fold(mutableMapOf(), { acc, map ->
-        acc.putAll(map).let { acc }
-    })
+    return fold(mutableMapOf(), { acc, map -> acc.putAll(map).let { acc } })
 }
