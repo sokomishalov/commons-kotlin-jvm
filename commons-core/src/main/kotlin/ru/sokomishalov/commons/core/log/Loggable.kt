@@ -52,5 +52,5 @@ interface Loggable {
 
     fun logError(throwable: Throwable, message: String? = throwable.message) = logger.error(message, throwable)
 
-    fun logError(throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) = logger.error(throwable, lazyMessage)
+    fun logError(throwable: Throwable, lazyMessage: () -> String?) = logger.error(throwable, lazyMessage)
 }
