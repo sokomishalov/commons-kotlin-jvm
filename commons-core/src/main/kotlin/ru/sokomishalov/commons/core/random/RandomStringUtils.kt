@@ -17,14 +17,29 @@
 
 package ru.sokomishalov.commons.core.random
 
-import org.apache.commons.lang3.RandomStringUtils.random
-
 /**
  * @author sokomishalov
  */
 
+private val LOWER_CASE_ALPHABET: CharRange = ('a'..'z')
+private val UPPER_CASE_ALPHABET: CharRange = ('A'..'Z')
+private val NUMBERS: CharRange = ('0'..'9')
+
 fun randomString(
         length: Int = 20,
         useLetters: Boolean = true,
-        useDigits: Boolean = false
-): String = random(length, useLetters, useDigits)
+        useDigits: Boolean = true,
+        lowerCase: Boolean = true,
+        upperCase: Boolean = true
+): String {
+    require(useLetters || useDigits)
+    require(!useLetters || lowerCase || upperCase)
+
+    val fullAlphabet: MutableList<Char> = mutableListOf()
+
+    if (useDigits) fullAlphabet += NUMBERS
+    if (useLetters && lowerCase) fullAlphabet += LOWER_CASE_ALPHABET
+    if (useLetters && upperCase) fullAlphabet += UPPER_CASE_ALPHABET
+
+    return List(length) { fullAlphabet.random() }.joinToString("")
+}
