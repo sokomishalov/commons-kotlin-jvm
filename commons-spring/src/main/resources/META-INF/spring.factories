@@ -1,3 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ru.sokomishalov.commons.spring.autoconfigure.InMemoryAutoConfiguration,\
   ru.sokomishalov.commons.spring.autoconfigure.MongoReactiveAutoConfiguration,\
-  ru.sokomishalov.commons.spring.autoconfigure.RedisLettuceAutoConfiguration
+  ru.sokomishalov.commons.spring.autoconfigure.RedisLettuceAutoConfiguration,\
+  ru.sokomishalov.commons.spring.autoconfigure.TarantoolAutoConfiguration

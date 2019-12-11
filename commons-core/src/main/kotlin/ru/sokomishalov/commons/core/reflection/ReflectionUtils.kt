@@ -22,8 +22,8 @@ import kotlin.reflect.full.companionObject
 /**
  * @author sokomishalov
  */
-fun <T : Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {
-    return ofClass.enclosingClass?.takeIf {
-        ofClass.enclosingClass.kotlin.companionObject?.java == ofClass
-    } ?: ofClass
+
+
+fun <T : Any> Class<T>.unwrapCompanionClass(): Class<*> {
+    return enclosingClass?.takeIf { enclosingClass.kotlin.companionObject?.java == this } ?: this
 }

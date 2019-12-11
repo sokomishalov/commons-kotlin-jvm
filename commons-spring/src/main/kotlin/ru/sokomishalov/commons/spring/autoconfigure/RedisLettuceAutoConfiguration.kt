@@ -18,24 +18,36 @@
 package ru.sokomishalov.commons.spring.autoconfigure
 
 import io.lettuce.core.RedisClient
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.sokomishalov.commons.spring.locks.cluster.LockProvider
-import ru.sokomishalov.commons.spring.locks.cluster.redis.RedisLettuceLockProvider
+import org.springframework.core.Ordered.HIGHEST_PRECEDENCE
+import ru.sokomishalov.commons.cache.CacheService
+import ru.sokomishalov.commons.cache.redis.RedisCacheService
+import ru.sokomishalov.commons.distributed.locks.DistributedLockProvider
+import ru.sokomishalov.commons.distributed.locks.redis.RedisLettuceDistributedLockProvider
 
 /**
  * @author sokomishalov
  */
 @Configuration
 @ConditionalOnClass(RedisClient::class)
+@AutoConfigureOrder(HIGHEST_PRECEDENCE)
 class RedisLettuceAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(LockProvider::class)
+    @ConditionalOnMissingBean(DistributedLockProvider::class)
     @ConditionalOnBean(RedisClient::class)
-    fun reactiveMongoClusterLockProvider(client: RedisClient): LockProvider =
-            RedisLettuceLockProvider(client = client)
+    fun reactiveMongoClusterLockProvider(client: RedisClient): DistributedLockProvider =
+            RedisLettuceDistributedLockProvider(client = client)
+
+    @Bean
+    @ConditionalOnMissingBean(CacheService::class)
+    @ConditionalOnBean(RedisClient::class)
+    fun redisCacheManager(client: RedisClient): CacheService {
+        return RedisCacheService(client = client)
+    }
 }

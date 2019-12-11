@@ -18,25 +18,37 @@
 package ru.sokomishalov.commons.spring.autoconfigure
 
 import com.mongodb.reactivestreams.client.MongoClient
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.sokomishalov.commons.spring.locks.cluster.LockProvider
-import ru.sokomishalov.commons.spring.locks.cluster.mongo.MongoReactiveLockProvider
+import org.springframework.core.Ordered.HIGHEST_PRECEDENCE
+import ru.sokomishalov.commons.cache.CacheService
+import ru.sokomishalov.commons.cache.mongo.MongoCacheService
+import ru.sokomishalov.commons.distributed.locks.DistributedLockProvider
+import ru.sokomishalov.commons.distributed.locks.mongo.MongoReactiveDistributedLockProvider
 
 /**
  * @author sokomishalov
  */
 @Configuration
 @ConditionalOnClass(MongoClient::class)
+@AutoConfigureOrder(HIGHEST_PRECEDENCE)
 class MongoReactiveAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(LockProvider::class)
+    @ConditionalOnMissingBean(DistributedLockProvider::class)
     @ConditionalOnBean(MongoClient::class)
-    fun reactiveMongoClusterLockProvider(client: MongoClient): LockProvider =
-            MongoReactiveLockProvider(client = client)
+    fun reactiveMongoClusterLockProvider(client: MongoClient): DistributedLockProvider =
+            MongoReactiveDistributedLockProvider(client = client)
 
+
+    @Bean
+    @ConditionalOnMissingBean(CacheService::class)
+    @ConditionalOnBean(MongoClient::class)
+    fun mongoCacheManager(client: MongoClient): CacheService {
+        return MongoCacheService(client = client)
+    }
 }
