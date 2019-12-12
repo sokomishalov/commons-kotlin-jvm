@@ -1,3 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ru.sokomishalov.commons.spring.autoconfigure.MongoReactiveAutoConfiguration,\
-  ru.sokomishalov.commons.spring.autoconfigure.RedisLettuceAutoConfiguration
+  ru.sokomishalov.commons.spring.autoconfigure.InMemoryCacheAutoConfiguration,\
+  ru.sokomishalov.commons.spring.autoconfigure.MongoReactiveCacheAutoConfiguration,\
+  ru.sokomishalov.commons.spring.autoconfigure.MongoReactiveDistributedLocksAutoConfiguration,\
+  ru.sokomishalov.commons.spring.autoconfigure.RedisLettuceCacheAutoConfiguration,\
+  ru.sokomishalov.commons.spring.autoconfigure.RedisLettuceDistributedLocksAutoConfiguration

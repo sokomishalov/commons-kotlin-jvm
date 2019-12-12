@@ -1,4 +1,4 @@
-# Kotlin Commons
+# Kotlin/JVM Commons
 
 [![Apache License 2](https://img.shields.io/badge/license-ASF2-purple.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 [![](https://jitpack.io/v/sokomishalov/commons.svg)](https://jitpack.io/#sokomishalov/commons)
@@ -28,4 +28,10 @@ Add the dependency:
 
 Available modules now are:
 - core
+- logging
+- serialization
+- reactor
+- coroutines
+- distributed-locks
+- cache
 - spring
