@@ -34,7 +34,10 @@ class WithDistributedLockAspect(private val distributedLockProvider: Distributed
             distributedLockProvider.withDistributedLock(
                     lockName = annotation.lockName,
                     lockAtLeastFor = ofMillis(annotation.lockAtLeastForMs),
-                    lockAtMostFor = ofMillis(annotation.lockAtMostForMs),
+                    lockAtMostFor = when {
+                        annotation.lockAtMostForMs >= 0 && annotation.lockAtLeastForMs <= annotation.lockAtMostForMs -> ofMillis(annotation.lockAtMostForMs)
+                        else -> ofMillis(annotation.lockAtLeastForMs)
+                    },
                     ifLockedValue = null
             ) {
                 pjp.proceed()
