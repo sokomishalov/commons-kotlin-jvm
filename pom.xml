@@ -25,7 +25,7 @@
         <caffeine.cache>2.8.0</caffeine.cache>
         <springfox.version>2.9.2</springfox.version>
         <mongo-reactive.version>1.13.0</mongo-reactive.version>
-        <test-containers.version>1.12.3</test-containers.version>
+        <test-containers.version>1.12.4</test-containers.version>
     </properties>
 
     <modules>
