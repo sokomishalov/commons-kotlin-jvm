@@ -7,11 +7,11 @@
     <parent>
         <groupId>ru.sokomishalov.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
     </parent>
 
     <artifactId>commons-distributed-locks</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <dependencies>
         <!--  COMPILE DEPS  -->
@@ -19,19 +19,19 @@
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-core</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-coroutines</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-serialization</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <!--  OPTIONAL DEPS  -->
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <dependency>
