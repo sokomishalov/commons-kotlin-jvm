@@ -11,7 +11,7 @@ import ru.sokomishalov.commons.distributed.locks.DistributedLockProvider
 import ru.sokomishalov.commons.distributed.locks.WithDistributedLockAspect
 
 @Configuration(proxyBeanMethods = true)
-@ConditionalOnClass(Advice::class)
+@ConditionalOnClass(Advice::class, DistributedLockProvider::class)
 class AopDistributedLocksConfiguration {
 
     @Bean
