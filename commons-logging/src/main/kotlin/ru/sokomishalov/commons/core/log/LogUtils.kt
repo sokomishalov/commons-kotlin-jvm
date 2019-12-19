@@ -20,12 +20,15 @@ package ru.sokomishalov.commons.core.log
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import ru.sokomishalov.commons.core.reflection.unwrapCompanionClass
+import kotlin.reflect.KClass
 
 /**
  * @author sokomishalov
  */
 
-fun <T> loggerFor(clazz: Class<T>): Logger = getLogger(clazz)
+fun <T : Any> loggerFor(clazz: Class<T>): Logger = getLogger(clazz)
+
+fun <T : Any> loggerFor(clazz: KClass<T>): Logger = getLogger(clazz.java)
 
 fun loggerFor(name: String): Logger = getLogger(name)
 
