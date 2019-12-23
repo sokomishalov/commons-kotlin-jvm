@@ -17,8 +17,10 @@
 
 package ru.sokomishalov.commons.core.http
 
+import io.netty.handler.logging.LoggingHandler
 import io.netty.handler.ssl.SslContextBuilder
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory
+import reactor.netty.channel.BootstrapHandlers
 import reactor.netty.http.client.HttpClient
 import reactor.netty.resources.ConnectionProvider
 import reactor.netty.tcp.TcpClient
@@ -28,7 +30,8 @@ val REACTIVE_NETTY_HTTP_CLIENT: HttpClient = createReactorNettyClient()
 fun createReactorNettyClient(
         fixedThreadPoolSize: Int? = null,
         followRedirect: Boolean = true,
-        isInsecure: Boolean = true
+        isInsecure: Boolean = true,
+        loggingHandler: LoggingHandler? = null
 ): HttpClient {
     val httpClient = when (fixedThreadPoolSize) {
         null -> HttpClient.create()
@@ -44,6 +47,14 @@ fun createReactorNettyClient(
                             .trustManager(InsecureTrustManagerFactory.INSTANCE)
                             .build()
                     )
+                }
+            }
+            .tcpConfiguration { tc ->
+                tc.bootstrap {
+                    when {
+                        loggingHandler != null -> BootstrapHandlers.updateLogSupport(it, loggingHandler)
+                        else -> it
+                    }
                 }
             }
 }
