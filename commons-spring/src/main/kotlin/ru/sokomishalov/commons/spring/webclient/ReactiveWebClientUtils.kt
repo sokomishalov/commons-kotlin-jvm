@@ -34,9 +34,10 @@ import ru.sokomishalov.commons.spring.serialization.JACKSON_ENCODER
 val REACTIVE_WEB_CLIENT: WebClient = createReactiveWebClient()
 
 fun createReactiveWebClient(
-        fixedThreadPoolSize: Int? = null,
         encoder: Jackson2JsonEncoder = JACKSON_ENCODER,
         decoder: Jackson2JsonDecoder = JACKSON_DECODER,
+        fixedThreadPoolSize: Int? = null,
+        maxBufferSize: Int? = null,
         filters: List<ExchangeFilterFunction> = emptyList()
 ): WebClient {
     val reactorNettyClient = createReactorNettyClient(fixedThreadPoolSize)
@@ -46,10 +47,11 @@ fun createReactiveWebClient(
             .clientConnector(ReactorClientHttpConnector(reactorNettyClient))
             .exchangeStrategies(ExchangeStrategies
                     .builder()
-                    .codecs {
-                        it.defaultCodecs().apply {
+                    .codecs { ccc ->
+                        ccc.defaultCodecs().apply {
                             jackson2JsonEncoder(encoder)
                             jackson2JsonDecoder(decoder)
+                            maxBufferSize?.let { maxInMemorySize(it) }
                         }
                     }
                     .build()

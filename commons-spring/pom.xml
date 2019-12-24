@@ -7,11 +7,11 @@
     <parent>
         <groupId>ru.sokomishalov.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>1.1.5</version>
+        <version>1.1.6</version>
     </parent>
 
     <artifactId>commons-spring</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
 
     <dependencies>
 
@@ -20,19 +20,19 @@
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-core</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-serialization</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
         </dependency>
 
         <dependency>
@@ -58,28 +58,28 @@
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-reactor</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-coroutines</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-distributed-locks</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-cache</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
             <optional>true</optional>
         </dependency>
 
