@@ -6,7 +6,8 @@ package ru.sokomishalov.commons.core.numbers
  * @author sokomishalov
  */
 
-const val MULTIPLIER: Int = 1024
+@PublishedApi
+internal const val MULTIPLIER: Int = 1024
 
 // kilobyte
 inline val Int.kb: Long get() = this.toLong() * MULTIPLIER
