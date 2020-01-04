@@ -21,12 +21,12 @@ import org.slf4j.Logger
  * @author sokomishalov
  */
 
-fun Logger.info(lazyMessage: () -> String?) = if (isInfoEnabled) info(lazyMessage()) else Unit
+inline fun Logger.info(lazyMessage: () -> String?) = if (isInfoEnabled) info(lazyMessage()) else Unit
 
-fun Logger.debug(lazyMessage: () -> String?) = if (isDebugEnabled) debug(lazyMessage()) else Unit
+inline fun Logger.debug(lazyMessage: () -> String?) = if (isDebugEnabled) debug(lazyMessage()) else Unit
 
-fun Logger.warn(lazyMessage: () -> String?) = if (isWarnEnabled) warn(lazyMessage()) else Unit
+inline fun Logger.warn(lazyMessage: () -> String?) = if (isWarnEnabled) warn(lazyMessage()) else Unit
 
-fun Logger.trace(lazyMessage: () -> String?) = if (isTraceEnabled) trace(lazyMessage()) else Unit
+inline fun Logger.trace(lazyMessage: () -> String?) = if (isTraceEnabled) trace(lazyMessage()) else Unit
 
-fun Logger.error(throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) = if (isErrorEnabled) error(lazyMessage(), throwable) else Unit
+inline fun Logger.error(throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) = if (isErrorEnabled) error(lazyMessage(), throwable) else Unit
