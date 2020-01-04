@@ -34,6 +34,6 @@ suspend inline fun <K, V> Map<out K, V>.aForEach(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
         noinline block: suspend CoroutineScope.(Map.Entry<K, V>) -> Unit
-): Unit = withContext(context) {
+): Unit = withContext(scope.plusContext(context)) {
     map { async { block(it) } }.awaitAll().unit()
 }

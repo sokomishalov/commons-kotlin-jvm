@@ -33,24 +33,24 @@ import kotlin.coroutines.EmptyCoroutineContext
 suspend inline fun <T> Iterable<T>.aForEach(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        noinline block: suspend CoroutineScope.(T) -> Unit
-) = withContext(context) {
+        crossinline block: suspend CoroutineScope.(T) -> Unit
+) = withContext(scope.plusContext(context)) {
     map { async { block(it) } }.awaitAll().unit()
 }
 
 suspend inline fun <T, R> Iterable<T>.aMap(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        noinline transform: suspend CoroutineScope.(T) -> R
-): List<R> = withContext(context) {
+        crossinline transform: suspend CoroutineScope.(T) -> R
+): List<R> = withContext(scope.plusContext(context)) {
     map { async { transform(it) } }.awaitAll()
 }
 
 suspend inline fun <T, R> Iterable<T>.aFlatMap(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        noinline transform: suspend CoroutineScope.(T) -> Iterable<R>
-): List<R> = withContext(context) {
+        crossinline transform: suspend CoroutineScope.(T) -> Iterable<R>
+): List<R> = withContext(scope.plusContext(context)) {
     val destination = mutableListOf<R>()
     map { async { destination.addAll(transform(it)) } }.awaitAll()
     destination
@@ -59,8 +59,8 @@ suspend inline fun <T, R> Iterable<T>.aFlatMap(
 suspend inline fun <T> Iterable<T>.aFilter(
         scope: CoroutineScope? = null,
         context: CoroutineContext = scope?.coroutineContext ?: EmptyCoroutineContext,
-        noinline predicate: suspend CoroutineScope.(T) -> Boolean
-): List<T> = withContext(context) {
+        crossinline predicate: suspend CoroutineScope.(T) -> Boolean
+): List<T> = withContext(scope.plusContext(context)) {
     val destination = mutableListOf<T>()
     map { async { if (predicate(it)) destination.add(it) } }.awaitAll()
     destination
