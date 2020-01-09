@@ -18,6 +18,8 @@
 package ru.sokomishalov.commons.core.time
 
 import java.time.Duration
+import java.time.Period
+import java.time.temporal.TemporalAmount
 
 /**
  * @author sokomishalov
@@ -29,3 +31,10 @@ fun Duration.humanReadable(): String? {
             .replace("(\\d[HMS])(?!$)".toRegex(), "$1 ")
             .toLowerCase()
 }
+
+inline val TemporalAmount.ms: Long
+    get() = when (this) {
+        is Duration -> this.toMillis()
+        is Period -> this.days.toLong() * 24 * 60 * 60 * 1000
+        else -> Duration.from(this).toMillis()
+    }
