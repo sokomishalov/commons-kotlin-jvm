@@ -30,7 +30,7 @@ fun <T : Any> loggerFor(clazz: Class<T>): Logger = getLogger(clazz)
 
 fun <T : Any> loggerFor(clazz: KClass<T>): Logger = getLogger(clazz.java)
 
-fun loggerFor(name: String): Logger = getLogger(name)
+fun loggerFor(className: String): Logger = getLogger(className)
 
 inline fun <reified T : Loggable> T.logger(): Logger = loggerFor(javaClass)
 
