@@ -28,12 +28,17 @@ object CustomLoggerFactory {
 
     fun <T : Loggable> getLogger(clazz: Class<T>): Logger {
         val nonCompanionClazz = clazz.unwrapCompanionClass()
-        val logger = loggersMap[nonCompanionClazz.name]
+        return getLogger(nonCompanionClazz.name)
+    }
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun getLogger(className: String): Logger {
+        val logger = loggersMap[className]
         return when {
             logger != null -> logger
             else -> {
-                val newLogger = loggerFor(nonCompanionClazz)
-                loggersMap[nonCompanionClazz.name] = newLogger
+                val newLogger = loggerFor(className)
+                loggersMap[className] = newLogger
                 newLogger
             }
         }

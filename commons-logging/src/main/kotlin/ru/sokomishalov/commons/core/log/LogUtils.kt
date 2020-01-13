@@ -36,3 +36,4 @@ inline fun <reified T : Loggable> T.logger(): Logger = loggerFor(javaClass)
 
 inline fun <reified T : Any> T.loggerDelegate(): Lazy<Logger> = lazy { loggerFor(javaClass.unwrapCompanionClass()) }
 
+inline fun <reified T : Loggable> CustomLoggerFactory.getLogger(): Logger = getLogger(T::class.java)

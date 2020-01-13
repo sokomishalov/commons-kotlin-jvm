@@ -38,7 +38,7 @@ interface Loggable {
 
     fun logDebug(lazyMessage: () -> String?) = logger.debug(lazyMessage)
 
-    fun logWarn(t: Throwable) = logWarn(t.message)
+    fun logWarn(t: Throwable) = logger.warn(t.message, t)
 
     fun logWarn(message: String?) = logger.warn(message)
 
