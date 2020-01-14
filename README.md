@@ -33,5 +33,5 @@ Available modules now are:
 - reactor
 - coroutines
 - distributed-locks
-- cache
+- ~~cache~~ (moved to [kache](https://github.com/SokoMishaLov/kache)) 
 - spring

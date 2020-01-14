@@ -35,7 +35,6 @@
         <module>commons-reactor</module>
         <module>commons-coroutines</module>
         <module>commons-distributed-locks</module>
-        <module>commons-cache</module>
         <module>commons-spring</module>
     </modules>
 
