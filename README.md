@@ -33,5 +33,5 @@ Available modules now are:
 - reactor
 - coroutines
 - spring
-- ~~distributed-locks~~ (moved to [kache](https://github.com/SokoMishaLov/lokk))
+- ~~distributed-locks~~ (moved to [lokk](https://github.com/SokoMishaLov/lokk))
 - ~~cache~~ (moved to [kache](https://github.com/SokoMishaLov/kache)) 
