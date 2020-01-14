@@ -20,12 +20,8 @@
         <logback.version>1.2.3</logback.version>
         <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
         <spring.version>5.2.2.RELEASE</spring.version>
-        <lettuce.version>5.2.1.RELEASE</lettuce.version>
-        <aspectj.version>1.9.5</aspectj.version>
         <caffeine.cache>2.8.0</caffeine.cache>
         <springfox.version>2.9.2</springfox.version>
-        <mongo-reactive.version>1.13.0</mongo-reactive.version>
-        <test-containers.version>1.12.4</test-containers.version>
     </properties>
 
     <modules>
@@ -34,7 +30,6 @@
         <module>commons-serialization</module>
         <module>commons-reactor</module>
         <module>commons-coroutines</module>
-        <module>commons-distributed-locks</module>
         <module>commons-spring</module>
     </modules>
 

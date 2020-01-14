@@ -32,6 +32,6 @@ Available modules now are:
 - serialization
 - reactor
 - coroutines
-- distributed-locks
-- ~~cache~~ (moved to [kache](https://github.com/SokoMishaLov/kache)) 
 - spring
+- ~~distributed-locks~~ (moved to [kache](https://github.com/SokoMishaLov/lokk))
+- ~~cache~~ (moved to [kache](https://github.com/SokoMishaLov/kache)) 

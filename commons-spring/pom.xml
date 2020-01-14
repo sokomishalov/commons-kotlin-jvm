@@ -70,13 +70,6 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.sokomishalov.commons</groupId>
-            <artifactId>commons-distributed-locks</artifactId>
-            <version>1.1.8</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
@@ -91,13 +84,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox.version}</version>
@@ -108,20 +94,6 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>${caffeine.cache}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-reactivestreams</artifactId>
-            <version>${mongo-reactive.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
-            <version>${lettuce.version}</version>
             <optional>true</optional>
         </dependency>
 
