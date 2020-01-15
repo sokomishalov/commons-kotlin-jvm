@@ -24,6 +24,7 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import ru.sokomishalov.commons.core.http.createReactorNettyClient
+import ru.sokomishalov.commons.core.string.isNotNullOrBlank
 import ru.sokomishalov.commons.spring.serialization.JACKSON_DECODER
 import ru.sokomishalov.commons.spring.serialization.JACKSON_ENCODER
 
@@ -34,17 +35,22 @@ import ru.sokomishalov.commons.spring.serialization.JACKSON_ENCODER
 val REACTIVE_WEB_CLIENT: WebClient = createReactiveWebClient()
 
 fun createReactiveWebClient(
+        baseUrl: String? = null,
         encoder: Jackson2JsonEncoder = JACKSON_ENCODER,
         decoder: Jackson2JsonDecoder = JACKSON_DECODER,
         fixedThreadPoolSize: Int? = null,
         maxBufferSize: Int? = null,
         filters: List<ExchangeFilterFunction> = emptyList()
 ): WebClient {
-    val reactorNettyClient = createReactorNettyClient(fixedThreadPoolSize)
-
-    val builder = WebClient
+    return WebClient
             .builder()
-            .clientConnector(ReactorClientHttpConnector(reactorNettyClient))
+            .run {
+                when {
+                    baseUrl.isNotNullOrBlank() -> this.baseUrl(baseUrl)
+                    else -> this
+                }
+            }
+            .clientConnector(ReactorClientHttpConnector(createReactorNettyClient(baseUrl = baseUrl, fixedThreadPoolSize = fixedThreadPoolSize)))
             .exchangeStrategies(ExchangeStrategies
                     .builder()
                     .codecs { ccc ->
@@ -56,8 +62,8 @@ fun createReactiveWebClient(
                     }
                     .build()
             )
-
-    filters.forEach { builder.filter(it) }
-
-    return builder.build()
+            .apply {
+                filters.forEach { f -> it.filter(f) }
+            }
+            .build()
 }
