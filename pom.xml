@@ -20,7 +20,7 @@
         <logback.version>1.2.3</logback.version>
         <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
         <spring.version>5.2.2.RELEASE</spring.version>
-        <caffeine.cache>2.8.0</caffeine.cache>
+        <caffeine.cache>2.8.1</caffeine.cache>
         <springfox.version>2.9.2</springfox.version>
     </properties>
 
