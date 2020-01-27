@@ -32,7 +32,7 @@ inline fun <R> runAndMeasure(block: () -> R): Pair<R, Duration> {
 }
 
 inline fun <T> runAndLogExecutionTime(
-        logAction: (Duration) -> Unit = { println("Execution time: $it") },
+        logAction: (Duration) -> Unit = { println("Execution time: ${it.humanReadable()}") },
         block: () -> T
 ): T {
     val pair = runAndMeasure { block() }
