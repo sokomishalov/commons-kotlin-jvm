@@ -43,7 +43,9 @@ import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 
-open class CustomExceptionHandler {
+open class CustomExceptionHandler(
+        private val fullErrorMessage: Boolean = true
+) {
 
     companion object : Loggable {
         private val messageReaders: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
@@ -98,7 +100,10 @@ open class CustomExceptionHandler {
         }
 
         val defaultAttributes = DefaultErrorAttributes().also {
-            it.storeErrorInformation(ResponseStatusException(status, e.message), this)
+            it.storeErrorInformation(when {
+                fullErrorMessage -> ResponseStatusException(status, e.message)
+                else -> ResponseStatusException(status)
+            }, this)
         }
 
         val attrMap = defaultAttributes.getErrorAttributes(create(this, messageReaders), false)
