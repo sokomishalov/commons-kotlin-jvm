@@ -43,7 +43,7 @@ import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 
-open class CustomExceptionHandler(
+open class CustomExceptionHandler @JvmOverloads constructor(
         private val fullErrorMessage: Boolean = true
 ) {
 
