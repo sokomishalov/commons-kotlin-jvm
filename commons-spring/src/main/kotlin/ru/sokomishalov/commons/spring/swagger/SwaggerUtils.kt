@@ -40,6 +40,8 @@ import kotlin.coroutines.Continuation
 const val SWAGGER_UI_PAGE = "swagger-ui.html"
 const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
 
+internal val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
+
 fun Docket.customize(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
@@ -48,7 +50,7 @@ fun Docket.customize(
         useDefaultResponseMessages: Boolean = false,
         title: String = EMPTY,
         description: String = EMPTY,
-        contact: Contact = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru"),
+        contact: Contact = DEFAULT_AUTHOR,
         version: String = "1.0.0"
 ): Docket {
     return this
