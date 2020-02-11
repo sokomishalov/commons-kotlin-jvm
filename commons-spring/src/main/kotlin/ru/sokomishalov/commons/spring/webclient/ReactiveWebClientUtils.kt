@@ -17,7 +17,9 @@
 
 package ru.sokomishalov.commons.spring.webclient
 
+import org.springframework.http.client.reactive.ClientHttpConnector
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
+import org.springframework.http.codec.CodecConfigurer
 import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
@@ -39,9 +41,15 @@ fun createReactiveWebClient(
         baseUrl: String? = null,
         fixedThreadPoolSize: Int? = null,
         reactorNettyClient: HttpClient = createReactorNettyClient(baseUrl = baseUrl, fixedThreadPoolSize = fixedThreadPoolSize),
+        clientConnector: ClientHttpConnector = ReactorClientHttpConnector(reactorNettyClient),
         encoder: Jackson2JsonEncoder = JACKSON_ENCODER,
         decoder: Jackson2JsonDecoder = JACKSON_DECODER,
         maxBufferSize: Int? = null,
+        codecs: CodecConfigurer.DefaultCodecs.() -> Unit = {
+            jackson2JsonEncoder(encoder)
+            jackson2JsonDecoder(decoder)
+            maxBufferSize?.let { maxInMemorySize(it) }
+        },
         filters: List<ExchangeFilterFunction> = emptyList()
 ): WebClient {
     return WebClient
@@ -52,16 +60,10 @@ fun createReactiveWebClient(
                     else -> this
                 }
             }
-            .clientConnector(ReactorClientHttpConnector(reactorNettyClient))
+            .clientConnector(clientConnector)
             .exchangeStrategies(ExchangeStrategies
                     .builder()
-                    .codecs { ccc ->
-                        ccc.defaultCodecs().apply {
-                            jackson2JsonEncoder(encoder)
-                            jackson2JsonDecoder(decoder)
-                            maxBufferSize?.let { maxInMemorySize(it) }
-                        }
-                    }
+                    .codecs { ccc -> ccc.defaultCodecs().apply(codecs) }
                     .build()
             )
             .apply {

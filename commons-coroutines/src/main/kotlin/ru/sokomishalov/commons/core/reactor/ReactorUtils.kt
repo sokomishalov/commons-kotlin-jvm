@@ -32,7 +32,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 fun <T> aFlux(
         context: CoroutineContext = EmptyCoroutineContext,
-        block: suspend () -> Iterable<T>
+        block: suspend CoroutineScope.() -> Iterable<T>
 ): Flux<T> {
     return flux(context) { block().forEach { send(it) } }
 }
