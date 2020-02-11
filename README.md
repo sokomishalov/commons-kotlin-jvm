@@ -1,8 +1,7 @@
 # Kotlin/JVM Commons
 
-[![Apache License 2](https://img.shields.io/badge/license-ASF2-purple.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
+[![Apache License 2](https://img.shields.io/badge/license-ASF2-purple.svg)](https://choosealicense.com/licenses/apache-2.0/)
 [![](https://jitpack.io/v/sokomishalov/commons.svg)](https://jitpack.io/#sokomishalov/commons)
-[![codebeat badge](https://codebeat.co/badges/b5cb2a82-6bfc-4cf6-a63f-cd69ab00f0d2)](https://codebeat.co/projects/github-com-sokomishalov-commons-master)
 
 ## Overview
 Helpers and utilities for kotlin (or jvm languages)
