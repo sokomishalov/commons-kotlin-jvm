@@ -15,13 +15,8 @@
  */
 @file:Suppress("unused")
 
-package ru.sokomishalov.commons.core.serialization
+package ru.sokomishalov.commons.spring.exception
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.xml.XmlFactory
 
-/**
- * @author sokomishalov
- */
-
-val XML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = XmlFactory())
+// For backward compatibility
+typealias CustomExceptionHandler = CustomWebFluxExceptionHandler
