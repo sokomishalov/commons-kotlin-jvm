@@ -17,19 +17,24 @@
 
 package ru.sokomishalov.commons.core.http
 
+import io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS
 import io.netty.handler.logging.LoggingHandler
 import io.netty.handler.ssl.SslContextBuilder
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory
+import io.netty.handler.timeout.ReadTimeoutHandler
 import reactor.netty.channel.BootstrapHandlers
 import reactor.netty.http.client.HttpClient
 import reactor.netty.resources.ConnectionProvider
 import reactor.netty.tcp.TcpClient
 import ru.sokomishalov.commons.core.string.isNotNullOrBlank
+import java.time.Duration
 
 val REACTIVE_NETTY_HTTP_CLIENT: HttpClient = createReactorNettyClient()
 
 fun createReactorNettyClient(
         baseUrl: String? = null,
+        readTimeout: Duration? = null,
+        connectionTimeout: Duration? = null,
         fixedThreadPoolSize: Int? = null,
         followRedirect: Boolean = true,
         isInsecure: Boolean = true,
@@ -37,38 +42,37 @@ fun createReactorNettyClient(
 ): HttpClient {
     return HttpClient
             .from(
-                    when (fixedThreadPoolSize) {
-                        null -> TcpClient.create()
-                        else -> TcpClient.create(ConnectionProvider.fixed("fixed-connection-pool", fixedThreadPoolSize))
-                    }
+                    if (fixedThreadPoolSize == null) TcpClient.create()
+                    else TcpClient.create(ConnectionProvider.fixed("fixed-connection-pool", fixedThreadPoolSize))
             )
-            .run {
-                when {
-                    baseUrl.isNotNullOrBlank() -> this.baseUrl(baseUrl)
-                    else -> this
-                }
-            }
-            .run {
-                when {
-                    isInsecure -> this.secure { ssl ->
-                        ssl.sslContext(SslContextBuilder
-                                .forClient()
-                                .trustManager(InsecureTrustManagerFactory.INSTANCE)
-                                .build()
-                        )
-                    }
-                    else -> this
-                }
-            }
-            .run {
-                when {
-                    loggingHandler != null -> this.tcpConfiguration { tc ->
-                        tc.bootstrap { b ->
-                            BootstrapHandlers.updateLogSupport(b, loggingHandler)
-                        }
-                    }
-                    else -> this
-                }
-            }
             .followRedirect(followRedirect)
+            .run {
+                if (baseUrl.isNotNullOrBlank()) baseUrl(baseUrl)
+                else this
+            }
+            .run {
+                if (isInsecure) secure { ssl ->
+                    ssl.sslContext(SslContextBuilder
+                            .forClient()
+                            .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                            .build()
+                    )
+                }
+                else this
+            }
+            .run {
+                tcpConfiguration { client ->
+                    client
+                            .run {
+                                if (loggingHandler != null) bootstrap { b -> BootstrapHandlers.updateLogSupport(b, loggingHandler) } else this
+                            }
+                            .run {
+                                if (connectionTimeout != null) option(CONNECT_TIMEOUT_MILLIS, connectionTimeout.toMillis().toInt()) else this
+                            }
+                            .run {
+                                if (readTimeout != null) doOnConnected { it.addHandlerLast(ReadTimeoutHandler(readTimeout.seconds.toInt())) } else this
+                            }
+                }
+
+            }
 }
