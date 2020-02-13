@@ -22,11 +22,10 @@ import io.netty.handler.timeout.TimeoutException
 import org.springframework.core.codec.DecodingException
 import org.springframework.core.codec.EncodingException
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatus.GATEWAY_TIMEOUT
+import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -43,7 +42,6 @@ import javax.servlet.http.HttpServletRequest
 import kotlin.NoSuchElementException
 
 
-@ControllerAdvice
 open class CustomServletRestExceptionHandler @JvmOverloads constructor(
         private val includeStacktrace: Boolean = true
 ) {
@@ -59,34 +57,34 @@ open class CustomServletRestExceptionHandler @JvmOverloads constructor(
             DecodingException::class,
             EncodingException::class
     )
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     @ResponseBody
-    open fun badRequestException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(HttpStatus.BAD_REQUEST, e)
+    open fun badRequestException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(BAD_REQUEST, e)
 
     @ExceptionHandler(
             AccessDeniedException::class,
             OperationNotSupportedException::class,
             NoPermissionException::class
     )
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(FORBIDDEN)
     @ResponseBody
-    open fun forbiddenException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(HttpStatus.FORBIDDEN, e)
+    open fun forbiddenException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(FORBIDDEN, e)
 
     @ExceptionHandler(
             AuthenticationException::class
     )
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(UNAUTHORIZED)
     @ResponseBody
-    open fun unauthorizedException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(HttpStatus.UNAUTHORIZED, e)
+    open fun unauthorizedException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(UNAUTHORIZED, e)
 
 
     @ExceptionHandler(
             UnsupportedOperationException::class,
             NotImplementedError::class
     )
-    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+    @ResponseStatus(NOT_IMPLEMENTED)
     @ResponseBody
-    open fun handleNotRealized(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(HttpStatus.NOT_IMPLEMENTED, e)
+    open fun handleNotRealized(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(NOT_IMPLEMENTED, e)
 
     @ExceptionHandler(
             ConnectException::class,
