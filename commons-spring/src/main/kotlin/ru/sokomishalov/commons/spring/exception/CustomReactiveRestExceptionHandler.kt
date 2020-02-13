@@ -19,39 +19,31 @@ package ru.sokomishalov.commons.spring.exception
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import io.netty.handler.timeout.TimeoutException
-import org.springframework.boot.web.reactive.error.DefaultErrorAttributes
 import org.springframework.core.codec.DecodingException
 import org.springframework.core.codec.EncodingException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.status
-import org.springframework.http.codec.DecoderHttpMessageReader
-import org.springframework.http.codec.HttpMessageReader
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.support.WebExchangeBindException
-import org.springframework.web.reactive.function.server.ServerRequest.create
-import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.server.ServerWebExchange
-import ru.sokomishalov.commons.core.log.Loggable
-import ru.sokomishalov.commons.spring.serialization.JACKSON_DECODER
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.net.ConnectException
 import java.time.format.DateTimeParseException
+import java.util.*
 import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
+import kotlin.NoSuchElementException
 
 open class CustomReactiveRestExceptionHandler @JvmOverloads constructor(
         private val includeStacktrace: Boolean = true
 ) {
-
-    companion object : Loggable {
-        private val MESSAGE_READERS: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
-    }
 
     @ExceptionHandler(
             IllegalArgumentException::class,
@@ -103,17 +95,21 @@ open class CustomReactiveRestExceptionHandler @JvmOverloads constructor(
 
 
     open fun ServerWebExchange.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
-        when {
-            status.is4xxClientError -> logWarn(e)
-            status.is5xxServerError -> logError(e)
+        val map = mutableMapOf(
+                "timestamp" to Date(),
+                "path" to request.path,
+                "status" to status.value(),
+                "error" to e.javaClass,
+                "message" to (e.message ?: status.reasonPhrase)
+        )
+
+        if (includeStacktrace) {
+            val stackTrace = StringWriter()
+            e.printStackTrace(PrintWriter(stackTrace))
+            stackTrace.flush()
+            map["trace"] = stackTrace.toString()
         }
 
-        val defaultAttributes = DefaultErrorAttributes().also {
-            it.storeErrorInformation(ResponseStatusException(status, e.message, e), this)
-        }
-
-        val attrMap = defaultAttributes.getErrorAttributes(create(this, MESSAGE_READERS), includeStacktrace)
-
-        return status(status).body(attrMap)
+        return ResponseEntity.status(status).body(map)
     }
 }

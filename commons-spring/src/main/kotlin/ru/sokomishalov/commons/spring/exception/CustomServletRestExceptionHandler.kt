@@ -4,7 +4,6 @@ package ru.sokomishalov.commons.spring.exception
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import io.netty.handler.timeout.TimeoutException
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes
 import org.springframework.core.codec.DecodingException
 import org.springframework.core.codec.EncodingException
 import org.springframework.http.HttpStatus
@@ -17,14 +16,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.support.WebExchangeBindException
-import org.springframework.web.context.request.ServletWebRequest
-import org.springframework.web.server.ResponseStatusException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.net.ConnectException
 import java.time.format.DateTimeParseException
+import java.util.*
 import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 import javax.servlet.http.HttpServletRequest
+import kotlin.NoSuchElementException
 
 
 @ControllerAdvice
@@ -82,13 +83,21 @@ open class CustomServletRestExceptionHandler @JvmOverloads constructor(
 
 
     open fun HttpServletRequest.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
+        val map = mutableMapOf(
+                "timestamp" to Date(),
+                "path" to requestURI,
+                "status" to status.value(),
+                "error" to e.javaClass,
+                "message" to (e.message ?: status.reasonPhrase)
+        )
 
-        val defaultAttributes = DefaultErrorAttributes(false).also {
-            it.resolveException(this, NullHttpServletServletHttpResponse, null, ResponseStatusException(status, e.message, e))
+        if (includeStacktrace) {
+            val stackTrace = StringWriter()
+            e.printStackTrace(PrintWriter(stackTrace))
+            stackTrace.flush()
+            map["trace"] = stackTrace.toString()
         }
 
-        val attrMap = defaultAttributes.getErrorAttributes(ServletWebRequest(this), includeStacktrace)
-
-        return ResponseEntity.status(status).body(attrMap)
+        return ResponseEntity.status(status).body(map)
     }
 }
