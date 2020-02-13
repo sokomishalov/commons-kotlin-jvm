@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.support.WebExchangeBindException
+import ru.sokomishalov.commons.core.log.Loggable
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.ConnectException
@@ -45,6 +46,8 @@ import kotlin.NoSuchElementException
 open class CustomServletRestExceptionHandler @JvmOverloads constructor(
         private val includeStacktrace: Boolean = true
 ) {
+
+    companion object : Loggable
 
     @ExceptionHandler(
             IllegalArgumentException::class,
@@ -96,6 +99,11 @@ open class CustomServletRestExceptionHandler @JvmOverloads constructor(
 
 
     open fun HttpServletRequest.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
+        when {
+            status.is4xxClientError -> logWarn(e)
+            status.is5xxServerError -> logError(e)
+        }
+
         val map = mutableMapOf(
                 "timestamp" to Date(),
                 "path" to requestURI,
