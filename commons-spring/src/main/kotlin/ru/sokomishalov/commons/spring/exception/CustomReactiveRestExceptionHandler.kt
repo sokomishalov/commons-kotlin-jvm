@@ -18,6 +18,7 @@
 package ru.sokomishalov.commons.spring.exception
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import io.netty.handler.timeout.TimeoutException
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes
 import org.springframework.core.codec.DecodingException
 import org.springframework.core.codec.EncodingException
@@ -38,18 +39,18 @@ import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.server.ServerWebExchange
 import ru.sokomishalov.commons.core.log.Loggable
 import ru.sokomishalov.commons.spring.serialization.JACKSON_DECODER
+import java.net.ConnectException
 import java.time.format.DateTimeParseException
 import javax.naming.AuthenticationException
 import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 
-open class CustomWebFluxExceptionHandler @JvmOverloads constructor(
-        private val fullErrorMessage: Boolean = true
+open class CustomReactiveRestExceptionHandler @JvmOverloads constructor(
+        private val includeStacktrace: Boolean = true
 ) {
 
     companion object : Loggable {
-        private val messageReaders: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
-        private const val ISE_MESSAGE = "Внутренняя ошибка сервера"
+        private val MESSAGE_READERS: List<HttpMessageReader<*>> = listOf(DecoderHttpMessageReader(JACKSON_DECODER))
     }
 
     @ExceptionHandler(
@@ -92,21 +93,26 @@ open class CustomWebFluxExceptionHandler @JvmOverloads constructor(
     @ResponseBody
     open fun handleNotRealized(e: Exception, exchange: ServerWebExchange): ResponseEntity<*> = exchange.toErrorResponseEntity(NOT_IMPLEMENTED, e)
 
+    @ExceptionHandler(
+            ConnectException::class,
+            TimeoutException::class
+    )
+    @ResponseStatus(GATEWAY_TIMEOUT)
+    @ResponseBody
+    open fun timeoutException(e: Exception, exchange: ServerWebExchange): ResponseEntity<*> = exchange.toErrorResponseEntity(GATEWAY_TIMEOUT, e)
+
 
     open fun ServerWebExchange.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
         when {
             status.is4xxClientError -> logWarn(e)
-            status.is5xxServerError -> logError(e, ISE_MESSAGE)
+            status.is5xxServerError -> logError(e)
         }
 
         val defaultAttributes = DefaultErrorAttributes().also {
-            it.storeErrorInformation(when {
-                fullErrorMessage -> ResponseStatusException(status, e.message)
-                else -> ResponseStatusException(status)
-            }, this)
+            it.storeErrorInformation(ResponseStatusException(status, e.message, e), this)
         }
 
-        val attrMap = defaultAttributes.getErrorAttributes(create(this, messageReaders), false)
+        val attrMap = defaultAttributes.getErrorAttributes(create(this, MESSAGE_READERS), includeStacktrace)
 
         return status(status).body(attrMap)
     }
