@@ -15,18 +15,8 @@
  */
 @file:Suppress("unused")
 
-package ru.sokomishalov.commons.spring.net
+package ru.sokomishalov.commons.core.collections
 
-import org.springframework.util.SocketUtils.*
-import ru.sokomishalov.commons.spring.net.SocketType.TCP
-import ru.sokomishalov.commons.spring.net.SocketType.UDP
-
-fun randomFreePort(
-        type: SocketType = TCP,
-        range: IntRange = (PORT_RANGE_MIN..PORT_RANGE_MAX)
-): Int {
-    return when (type) {
-        TCP -> findAvailableTcpPort(range.first, range.last)
-        UDP -> findAvailableUdpPort(range.first, range.last)
-    }
+internal inline fun <T, K, V> Array<out T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
+    return map(transform).toMap()
 }

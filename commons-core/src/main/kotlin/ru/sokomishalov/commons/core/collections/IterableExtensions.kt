@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2020 the original author or authors.
+ * Copyright (c) 2019-present Mikhael Sokolov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,4 +23,8 @@ package ru.sokomishalov.commons.core.collections
 
 inline fun <reified K, V> Iterable<Map<K, V>>.toMap(): Map<K, V> {
     return fold(mutableMapOf(), { acc, map -> acc.putAll(map).let { acc } })
+}
+
+internal inline fun <T, K, V> Iterable<T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
+    return map(transform).toMap()
 }
