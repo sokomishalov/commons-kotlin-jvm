@@ -25,6 +25,6 @@ inline fun <reified K, V> Iterable<Map<K, V>>.toMap(): Map<K, V> {
     return fold(mutableMapOf(), { acc, map -> acc.putAll(map).let { acc } })
 }
 
-internal inline fun <T, K, V> Iterable<T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
+inline fun <T, K, V> Iterable<T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
     return map(transform).toMap()
 }
