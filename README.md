@@ -21,7 +21,7 @@ Add the dependency:
 <dependency>
     <groupId>com.github.sokomishalov.commons</groupId>
     <artifactId>commons-[module]</artifactId>
-    <version>Tag</version>
+    <version>1.1.12</version>
 </dependency>
 ```
 
@@ -32,5 +32,3 @@ Available modules now are:
 - reactor
 - coroutines
 - spring
-- ~~distributed-locks~~ (moved to [lokk](https://github.com/SokoMishaLov/lokk))
-- ~~cache~~ (moved to [kache](https://github.com/SokoMishaLov/kache)) 
