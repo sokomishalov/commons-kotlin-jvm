@@ -18,13 +18,13 @@
 package ru.sokomishalov.commons.spring.swagger
 
 import com.fasterxml.classmate.TypeResolver
+import org.springframework.boot.info.BuildProperties
 import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.multipart.MultipartFile
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ru.sokomishalov.commons.core.consts.EMPTY
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.schema.AlternateTypeRules.newRule
 import springfox.documentation.service.Contact
@@ -48,10 +48,11 @@ fun Docket.customize(
         ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),
         genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java),
         useDefaultResponseMessages: Boolean = false,
-        title: String = EMPTY,
-        description: String = EMPTY,
-        contact: Contact = DEFAULT_AUTHOR,
-        version: String = "1.0.0"
+        buildProperties: BuildProperties? = null,
+        title: String = buildProperties?.name.orEmpty(),
+        description: String = buildProperties?.artifact.orEmpty(),
+        version: String = buildProperties?.version.orEmpty(),
+        contact: Contact = DEFAULT_AUTHOR
 ): Docket {
     return this
             .useDefaultResponseMessages(useDefaultResponseMessages)
