@@ -61,12 +61,6 @@
                             <include>**/*.kt</include>
                             <include>**/*.java</include>
                         </includes>
-                        <excludes>
-                            <exclude>LICENSE.md</exclude>
-                            <exclude>*.xml</exclude>
-                            <exclude>*.properties</exclude>
-                            <exclude>*.yml</exclude>
-                        </excludes>
                     </configuration>
                 </plugin>
             </plugins>
