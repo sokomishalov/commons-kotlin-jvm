@@ -17,18 +17,8 @@
 
 package ru.sokomishalov.commons.core.consts
 
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
-import kotlin.text.RegexOption.IGNORE_CASE
-
 /**
  * @author sokomishalov
  */
 const val EMPTY = ""
 const val LOCALHOST = "localhost"
-
-val DEFAULT_DATE_FORMATTER: DateTimeFormatter = ofPattern("yyyy-MM-dd HH:mm:ss")
-
-val XML_LIKE_REGEX: Regex = "(?s).*(<(\\w+)[^>]*>.*</\\2>|<(\\w+)[^>]*/>).*".toRegex(IGNORE_CASE)
-val JSON_LIKE_REGEX: Regex = "[{\\[]([,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]|\".*?\")+[}\\]]".toRegex(IGNORE_CASE)
-val EMAIL_REGEX: Regex = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+".toRegex(IGNORE_CASE)
