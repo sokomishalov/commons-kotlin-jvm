@@ -32,7 +32,7 @@ interface Loggable {
 
     fun logInfo(s: String?) = logger.info(s)
 
-    fun logInfo(lazyMessage: () -> String?) = logger.info(lazyMessage())
+    fun logInfo(lazyMessage: () -> String?) = logger.info(lazyMessage)
 
     fun logDebug(s: String?) = logger.debug(s)
 
