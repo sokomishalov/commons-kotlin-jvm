@@ -43,7 +43,7 @@ fun createReactorNettyClient(
     return HttpClient
             .from(
                     if (fixedThreadPoolSize == null) TcpClient.create()
-                    else TcpClient.create(ConnectionProvider.fixed("fixed-connection-pool", fixedThreadPoolSize))
+                    else TcpClient.create(ConnectionProvider.create("fixed-connection-pool", fixedThreadPoolSize))
             )
             .followRedirect(followRedirect)
             .run {
