@@ -21,7 +21,7 @@ Add the dependency:
 <dependency>
     <groupId>com.github.sokomishalov.commons</groupId>
     <artifactId>commons-[module]</artifactId>
-    <version>1.1.13</version>
+    <version>1.1.14</version>
 </dependency>
 ```
 
