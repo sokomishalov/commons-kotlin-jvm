@@ -34,7 +34,7 @@ class LogUtilsTest {
 
 class LogWithInterface : Loggable {
     fun doJob() {
-        log("interface")
+        logInfo { "interface" }
     }
 }
 

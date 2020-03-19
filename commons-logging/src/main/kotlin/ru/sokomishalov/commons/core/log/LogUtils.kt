@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package ru.sokomishalov.commons.core.log
 
@@ -26,13 +26,13 @@ import kotlin.reflect.KClass
  * @author sokomishalov
  */
 
-fun <T : Any> loggerFor(clazz: Class<T>): Logger = getLogger(clazz)
+inline fun <T : Any> loggerFor(clazz: Class<T>): Logger = getLogger(clazz)
 
-fun <T : Any> loggerFor(clazz: KClass<T>): Logger = getLogger(clazz.java)
+inline fun <T : Any> loggerFor(clazz: KClass<T>): Logger = getLogger(clazz.java)
 
-fun loggerFor(className: String): Logger = getLogger(className)
+inline fun loggerFor(className: String): Logger = getLogger(className)
 
-inline fun <reified T : Loggable> T.logger(): Logger = loggerFor(javaClass)
+inline fun <reified T : Loggable> T.logger(): Logger = logger
 
 inline fun <reified T : Any> T.loggerDelegate(): Lazy<Logger> = lazy { loggerFor(javaClass.unwrapCompanionClass()) }
 

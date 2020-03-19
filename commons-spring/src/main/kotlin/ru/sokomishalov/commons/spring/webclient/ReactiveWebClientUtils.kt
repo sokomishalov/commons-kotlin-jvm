@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@file:Suppress("unused")
 
 package ru.sokomishalov.commons.spring.webclient
 
@@ -39,9 +39,9 @@ val REACTIVE_WEB_CLIENT: WebClient = createReactiveWebClient()
 
 fun createReactiveWebClient(
         baseUrl: String? = null,
-        fixedThreadPoolSize: Int? = null,
-        reactorNettyClient: HttpClient = createReactorNettyClient(baseUrl = baseUrl, fixedThreadPoolSize = fixedThreadPoolSize),
+        reactorNettyClient: HttpClient = createReactorNettyClient(baseUrl = baseUrl),
         clientConnector: ClientHttpConnector = ReactorClientHttpConnector(reactorNettyClient),
+        filters: List<ExchangeFilterFunction> = emptyList(),
         encoder: Jackson2JsonEncoder = JACKSON_ENCODER,
         decoder: Jackson2JsonDecoder = JACKSON_DECODER,
         maxBufferSize: Int? = null,
@@ -49,14 +49,13 @@ fun createReactiveWebClient(
             jackson2JsonEncoder(encoder)
             jackson2JsonDecoder(decoder)
             maxBufferSize?.let { maxInMemorySize(it) }
-        },
-        filters: List<ExchangeFilterFunction> = emptyList()
+        }
 ): WebClient {
     return WebClient
             .builder()
             .run {
                 when {
-                    baseUrl.isNotNullOrBlank() -> this.baseUrl(baseUrl)
+                    baseUrl.isNotNullOrBlank() -> baseUrl(baseUrl)
                     else -> this
                 }
             }

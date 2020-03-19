@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("UNCHECKED_CAST", "unused")
+@file:Suppress(
+        "UNCHECKED_CAST",
+        "unused",
+        "NOTHING_TO_INLINE"
+)
 
 package ru.sokomishalov.commons.spring.cache
 
+import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
 
-/**
- * @author sokomishalov
- */
+// until merged
+// https://github.com/spring-projects/spring-framework/pull/23927/files
 
-fun <V> CacheManager.put(cacheName: String, key: String, value: V?) {
-    getCache(cacheName)?.put(key, value)
-}
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified T : Any> Cache.get(key: Any): T? = get(key, T::class.java)
 
-operator fun <V> CacheManager.set(cacheName: String, key: String, value: V?) {
-    put(cacheName, key, value)
-}
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline operator fun Cache.get(key: Any): Cache.ValueWrapper? = get(key)
 
-fun CacheManager.evict(cacheName: String, key: String) {
-    getCache(cacheName)?.evict(key)
-}
+inline operator fun Cache.set(key: Any, value: Any?) = put(key, value)
 
-operator fun <V> CacheManager.get(cacheName: String, key: String): V? {
-    return when (val value = getCache(cacheName)?.get(key)?.get()) {
-        null -> null
-        else -> value as V
-    }
-}
+inline operator fun CacheManager.get(name: String): Cache? = getCache(name)

@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package ru.sokomishalov.commons.core.log
 
 import org.slf4j.Logger
@@ -31,15 +33,12 @@ object CustomLoggerFactory {
         return getLogger(nonCompanionClazz.name)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun getLogger(className: String): Logger {
         val logger = loggersMap[className]
         return when {
             logger != null -> logger
-            else -> {
-                val newLogger = loggerFor(className)
-                loggersMap[className] = newLogger
-                newLogger
+            else -> loggerFor(className).also {
+                loggersMap[className] = it
             }
         }
     }

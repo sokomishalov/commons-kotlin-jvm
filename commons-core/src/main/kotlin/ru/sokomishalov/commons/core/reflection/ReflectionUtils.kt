@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package ru.sokomishalov.commons.core.reflection
 
@@ -22,7 +22,7 @@ package ru.sokomishalov.commons.core.reflection
  */
 
 
-fun <T : Any> Class<T>.unwrapCompanionClass(): Class<*> {
+inline fun <T : Any> Class<T>.unwrapCompanionClass(): Class<*> {
     return when {
         name.endsWith("\$Companion") -> enclosingClass ?: this
         else -> this

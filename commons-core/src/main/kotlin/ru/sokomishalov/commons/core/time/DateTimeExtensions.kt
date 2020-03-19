@@ -13,28 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package ru.sokomishalov.commons.core.time
 
 import java.time.Duration
-import java.time.Period
-import java.time.temporal.TemporalAmount
 
 /**
  * @author sokomishalov
  */
 
-fun Duration.humanReadable(): String? {
+inline fun Duration.humanReadable(): String? {
     return toString()
             .substring(2)
             .replace("(\\d[HMS])(?!$)".toRegex(), "$1 ")
             .toLowerCase()
 }
-
-inline val TemporalAmount.ms: Long
-    get() = when (this) {
-        is Duration -> this.toMillis()
-        is Period -> this.days.toLong() * 24 * 60 * 60 * 1000
-        else -> Duration.from(this).toMillis()
-    }

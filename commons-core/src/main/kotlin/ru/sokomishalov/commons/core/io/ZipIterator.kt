@@ -24,7 +24,7 @@ import java.util.zip.ZipInputStream
 class ZipIterator(
         private val zis: ZipInputStream
 ) : Iterator<ZipEntry> {
-    var next: ZipEntry? = null
+    private var next: ZipEntry? = null
 
     override operator fun hasNext(): Boolean {
         next = zis.nextEntry
