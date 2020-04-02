@@ -18,8 +18,8 @@
         <reactor-netty.version>0.9.6.RELEASE</reactor-netty.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
-        <spring.version>5.2.4.RELEASE</spring.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <spring.version>5.2.5.RELEASE</spring.version>
         <caffeine.version>2.8.1</caffeine.version>
         <springfox.version>2.9.2</springfox.version>
     </properties>
