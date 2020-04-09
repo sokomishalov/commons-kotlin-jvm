@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequest
 import kotlin.NoSuchElementException
 
 
-open class CustomServletRestExceptionHandler @JvmOverloads constructor(
+open class CustomWebMvcRestExceptionHandler @JvmOverloads constructor(
         private val includeStacktrace: Boolean = true
 ) {
 

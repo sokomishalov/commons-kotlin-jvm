@@ -19,4 +19,4 @@ package ru.sokomishalov.commons.spring.exception
 
 
 // For backward compatibility
-typealias CustomExceptionHandler = CustomReactiveRestExceptionHandler
+typealias CustomExceptionHandler = CustomWebFluxRestExceptionHandler

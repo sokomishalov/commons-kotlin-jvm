@@ -42,7 +42,7 @@ import javax.naming.NoPermissionException
 import javax.naming.OperationNotSupportedException
 import kotlin.NoSuchElementException
 
-open class CustomReactiveRestExceptionHandler @JvmOverloads constructor(
+open class CustomWebFluxRestExceptionHandler @JvmOverloads constructor(
         private val includeStacktrace: Boolean = true
 ) {
 
