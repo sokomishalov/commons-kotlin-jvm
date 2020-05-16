@@ -11,7 +11,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.3.71</kotlin.version>
+        <kotlin.version>1.3.72</kotlin.version>
         <kotlinx-coroutines.version>1.3.6</kotlinx-coroutines.version>
         <jackson.version>2.10.3</jackson.version>
         <reactor.version>3.3.4.RELEASE</reactor.version>
