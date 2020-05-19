@@ -44,11 +44,11 @@ fun createReactiveWebClient(
         filters: List<ExchangeFilterFunction> = emptyList(),
         encoder: Jackson2JsonEncoder = JACKSON_ENCODER,
         decoder: Jackson2JsonDecoder = JACKSON_DECODER,
-        maxBufferSize: Int? = null,
+        maxBufferSize: Int = -1,
         codecs: CodecConfigurer.DefaultCodecs.() -> Unit = {
             jackson2JsonEncoder(encoder)
             jackson2JsonDecoder(decoder)
-            maxBufferSize?.let { maxInMemorySize(it) }
+            maxInMemorySize(maxBufferSize)
         }
 ): WebClient {
     return WebClient
