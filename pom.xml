@@ -6,10 +6,11 @@
 
     <groupId>ru.sokomishalov.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>1.1.14</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
+        <revision>1.1.15</revision>
         <java.version>1.8</java.version>
         <kotlin.version>1.3.72</kotlin.version>
         <kotlinx-coroutines.version>1.3.7</kotlinx-coroutines.version>

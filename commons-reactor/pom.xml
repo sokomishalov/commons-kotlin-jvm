@@ -7,17 +7,17 @@
     <parent>
         <groupId>ru.sokomishalov.commons</groupId>
         <artifactId>commons-parent</artifactId>
-        <version>1.1.14</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>commons-reactor</artifactId>
-    <version>1.1.14</version>
+    <version>${revision}</version>
 
     <dependencies>
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-core</artifactId>
-            <version>1.1.14</version>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
