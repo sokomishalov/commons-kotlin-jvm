@@ -39,8 +39,8 @@ import kotlin.coroutines.Continuation
 
 const val SWAGGER_UI_PAGE = "swagger-ui.html"
 const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
-
-internal val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
+private val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
+private val TYPE_RESOLVER = TypeResolver()
 
 fun Docket.customize(
         securityContext: SecurityContext? = null,
@@ -84,6 +84,3 @@ fun Docket.customize(
                     .build()
             )
 }
-
-
-private val TYPE_RESOLVER = TypeResolver()

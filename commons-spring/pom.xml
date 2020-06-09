@@ -98,18 +98,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <version>${caffeine.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
-            <version>4.0.1</version>
+            <version>${javax-servlet-api.version}</version>
         </dependency>
 
     </dependencies>
