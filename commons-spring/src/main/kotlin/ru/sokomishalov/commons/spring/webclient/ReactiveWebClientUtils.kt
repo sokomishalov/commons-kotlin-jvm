@@ -35,7 +35,7 @@ import ru.sokomishalov.commons.spring.serialization.JACKSON_ENCODER
  * @author sokomishalov
  */
 
-@JvmField
+
 val REACTIVE_WEB_CLIENT: WebClient = createReactiveWebClient()
 
 fun createReactiveWebClient(

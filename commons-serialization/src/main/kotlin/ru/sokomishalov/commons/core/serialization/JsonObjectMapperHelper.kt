@@ -21,5 +21,5 @@ import com.fasterxml.jackson.databind.ObjectMapper
  * @author sokomishalov
  */
 
-@JvmField
+
 val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()

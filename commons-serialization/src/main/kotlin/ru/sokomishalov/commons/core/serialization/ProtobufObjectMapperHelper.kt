@@ -24,5 +24,5 @@ import com.fasterxml.jackson.dataformat.protobuf.ProtobufFactory
  * @author sokomishalov
  */
 
-@JvmField
+
 val PROTOBUF_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = ProtobufFactory())

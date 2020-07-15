@@ -24,5 +24,5 @@ import com.fasterxml.jackson.dataformat.csv.CsvFactory
  * @author sokomishalov
  */
 
-@JvmField
+
 val CSV_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = CsvFactory())
