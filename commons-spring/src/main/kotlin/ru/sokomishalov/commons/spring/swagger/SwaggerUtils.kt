@@ -33,6 +33,7 @@ import springfox.documentation.service.SecurityScheme
 import springfox.documentation.spi.DocumentationType.SWAGGER_2
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
+import java.util.concurrent.Future
 import kotlin.coroutines.Continuation
 
 /**
@@ -56,7 +57,7 @@ fun Docket.customize(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
         ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),
-        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java),
+        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, Future::class.java),
         useDefaultResponseMessages: Boolean = false,
         buildProperties: BuildProperties? = null,
         title: String = buildProperties?.name.orEmpty(),
