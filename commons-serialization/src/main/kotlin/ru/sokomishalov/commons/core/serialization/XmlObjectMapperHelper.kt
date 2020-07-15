@@ -24,4 +24,5 @@ import com.fasterxml.jackson.dataformat.xml.XmlFactory
  * @author sokomishalov
  */
 
+@JvmField
 val XML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = XmlFactory())

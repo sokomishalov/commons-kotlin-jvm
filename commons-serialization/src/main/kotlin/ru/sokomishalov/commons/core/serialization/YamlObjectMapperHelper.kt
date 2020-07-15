@@ -24,4 +24,5 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
  * @author sokomishalov
  */
 
+@JvmField
 val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = YAMLFactory())

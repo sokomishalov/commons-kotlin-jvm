@@ -34,6 +34,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  * @author sokomishalov
  */
 
+@JvmOverloads
 fun buildComplexObjectMapper(
         factory: JsonFactory? = null,
         namingStrategy: PropertyNamingStrategy = LOWER_CAMEL_CASE

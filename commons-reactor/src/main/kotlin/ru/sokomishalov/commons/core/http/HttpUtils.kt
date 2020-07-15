@@ -29,6 +29,7 @@ import reactor.netty.tcp.TcpClient
 import ru.sokomishalov.commons.core.string.isNotNullOrBlank
 import java.time.Duration
 
+@JvmField
 val REACTIVE_NETTY_HTTP_CLIENT: HttpClient = createReactorNettyClient()
 
 fun createReactorNettyClient(
