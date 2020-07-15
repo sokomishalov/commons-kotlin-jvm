@@ -40,7 +40,7 @@ import kotlin.coroutines.Continuation
  * @author sokomishalov
  */
 
-const val SWAGGER_UI_PAGE = "/swagger-ui/"
+const val SWAGGER_UI_PAGE = "swagger-ui/"
 const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
 private val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
 private val TYPE_RESOLVER = TypeResolver()
