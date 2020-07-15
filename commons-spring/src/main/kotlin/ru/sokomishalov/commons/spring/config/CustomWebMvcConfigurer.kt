@@ -17,17 +17,23 @@
 
 package ru.sokomishalov.commons.spring.config
 
+import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer
 import org.springframework.web.servlet.config.annotation.CorsRegistry
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import ru.sokomishalov.commons.core.serialization.OBJECT_MAPPER
+import java.util.concurrent.Executors
 
 open class CustomWebMvcConfigurer : WebMvcConfigurer {
 
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.apply {
-            addResourceHandler("/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/")
-            addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
-        }
+    override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
+        converters += MappingJackson2HttpMessageConverter(OBJECT_MAPPER)
+    }
+
+    override fun configureAsyncSupport(configurer: AsyncSupportConfigurer) {
+        configurer.setTaskExecutor(ConcurrentTaskExecutor(Executors.newCachedThreadPool()))
     }
 
     override fun addCorsMappings(registry: CorsRegistry) {

@@ -26,8 +26,10 @@ interface Loggable {
 
     val logger: Logger get() = CustomLoggerFactory.getLogger(javaClass)
 
+    @Deprecated("Use logInfo() instead", replaceWith = ReplaceWith("logInfo(s)"))
     fun log(s: String?) = logger.info(s)
 
+    @Deprecated("Use logInfo() instead", replaceWith = ReplaceWith("logInfo(lazyMessage)"))
     fun log(lazyMessage: () -> String?) = logger.info(lazyMessage)
 
     fun logInfo(s: String?) = logger.info(s)

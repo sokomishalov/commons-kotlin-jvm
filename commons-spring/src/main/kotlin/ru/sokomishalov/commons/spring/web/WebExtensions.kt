@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress(
+        "unused",
+        "NOTHING_TO_INLINE"
+)
 
 package ru.sokomishalov.commons.spring.web
 
@@ -27,7 +30,7 @@ import org.springframework.http.ResponseEntity
  * @author sokomishalov
  */
 
-inline fun <reified T> T?.toResponseEntity(): ResponseEntity<T> = when {
+inline fun <T> T?.toResponseEntity(): ResponseEntity<T> = when {
     this == null -> ResponseEntity.ok().build()
     else -> ResponseEntity.ok(this)
 }

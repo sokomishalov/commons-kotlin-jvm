@@ -26,9 +26,11 @@ import org.springframework.web.multipart.MultipartFile
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import springfox.documentation.builders.ApiInfoBuilder
+import springfox.documentation.builders.RequestHandlerSelectors.basePackage
 import springfox.documentation.schema.AlternateTypeRules.newRule
 import springfox.documentation.service.Contact
 import springfox.documentation.service.SecurityScheme
+import springfox.documentation.spi.DocumentationType.SWAGGER_2
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
 import kotlin.coroutines.Continuation
@@ -37,10 +39,18 @@ import kotlin.coroutines.Continuation
  * @author sokomishalov
  */
 
-const val SWAGGER_UI_PAGE = "swagger-ui.html"
+const val SWAGGER_UI_PAGE = "/swagger-ui/"
 const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
 private val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
 private val TYPE_RESOLVER = TypeResolver()
+
+inline fun <reified T : Any> initDocket(): Docket {
+    return Docket(SWAGGER_2)
+            .select()
+            .apis(basePackage(T::class.java.`package`.name))
+            .paths { true }
+            .build()
+}
 
 fun Docket.customize(
         securityContext: SecurityContext? = null,
