@@ -21,7 +21,6 @@ import com.fasterxml.classmate.TypeResolver
 import org.springframework.boot.info.BuildProperties
 import org.springframework.http.ResponseEntity
 import org.springframework.http.codec.multipart.FilePart
-import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.multipart.MultipartFile
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -30,11 +29,12 @@ import springfox.documentation.builders.RequestHandlerSelectors.basePackage
 import springfox.documentation.schema.AlternateTypeRules.newRule
 import springfox.documentation.service.Contact
 import springfox.documentation.service.SecurityScheme
-import springfox.documentation.spi.DocumentationType.SWAGGER_2
+import springfox.documentation.spi.DocumentationType
+import springfox.documentation.spi.DocumentationType.OAS_30
 import springfox.documentation.spi.service.contexts.SecurityContext
 import springfox.documentation.spring.web.plugins.Docket
 import java.util.concurrent.CompletableFuture
-import kotlin.coroutines.Continuation
+import java.util.concurrent.Future
 
 /**
  * @author sokomishalov
@@ -45,8 +45,8 @@ const val REDIRECT_TO_SWAGGER = "redirect:${SWAGGER_UI_PAGE}"
 private val DEFAULT_AUTHOR = Contact("Sokolov Mikhael", "https://sokomishalov.github.io/about-me", "sokomishalov@mail.ru")
 private val TYPE_RESOLVER = TypeResolver()
 
-inline fun <reified T : Any> initDocket(): Docket {
-    return Docket(SWAGGER_2)
+inline fun <reified T : Any> initDocket(type: DocumentationType = OAS_30): Docket {
+    return Docket(type)
             .select()
             .apis(basePackage(T::class.java.`package`.name))
             .paths { true }
@@ -56,8 +56,8 @@ inline fun <reified T : Any> initDocket(): Docket {
 fun Docket.customize(
         securityContext: SecurityContext? = null,
         securityScheme: SecurityScheme? = null,
-        ignoredParameterTypes: List<Class<out Any>> = listOf(ServerHttpRequest::class.java, Continuation::class.java),
-        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, CompletableFuture::class.java),
+        ignoredParameterTypes: List<Class<out Any>> = emptyList(),
+        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, CompletableFuture::class.java, Future::class.java),
         useDefaultResponseMessages: Boolean = false,
         buildProperties: BuildProperties? = null,
         title: String = buildProperties?.name.orEmpty(),

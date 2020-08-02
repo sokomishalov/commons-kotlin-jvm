@@ -25,8 +25,5 @@ import ru.sokomishalov.commons.core.serialization.OBJECT_MAPPER
  * @author sokomishalov
  */
 
-
 val JACKSON_ENCODER = Jackson2JsonEncoder(OBJECT_MAPPER)
-
-
 val JACKSON_DECODER = Jackson2JsonDecoder(OBJECT_MAPPER)
