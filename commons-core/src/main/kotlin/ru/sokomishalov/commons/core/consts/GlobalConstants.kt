@@ -21,4 +21,3 @@ package ru.sokomishalov.commons.core.consts
  * @author sokomishalov
  */
 const val EMPTY = ""
-const val LOCALHOST = "localhost"

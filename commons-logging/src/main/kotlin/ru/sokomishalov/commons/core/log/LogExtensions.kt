@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
-package ru.sokomishalov.commons.core.serialization
+package ru.sokomishalov.commons.core.log
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import org.slf4j.Logger
+import kotlin.reflect.KClass
 
 /**
  * @author sokomishalov
  */
 
+inline fun <reified T : Any> getLogger(): Logger = CustomLoggerFactory.getLogger<T>()
 
-val YAML_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = YAMLFactory())
+inline fun <T : Any> loggerFor(clazz: Class<T>): Logger = CustomLoggerFactory.getLogger(clazz)
+
+inline fun <T : Any> loggerFor(clazz: KClass<T>): Logger = CustomLoggerFactory.getLogger(clazz.java)
+
+inline fun <T : Any> T.loggerDelegate(): Lazy<Logger> = lazy { CustomLoggerFactory.getLogger(javaClass) }
+
+inline fun <reified T : Any> CustomLoggerFactory.getLogger(): Logger = getLogger(T::class.java)

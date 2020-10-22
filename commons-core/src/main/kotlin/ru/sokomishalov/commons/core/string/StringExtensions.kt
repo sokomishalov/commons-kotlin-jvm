@@ -17,17 +17,22 @@
 
 package ru.sokomishalov.commons.core.string
 
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
 /**
  * @author sokomishalov
  */
 
-@OptIn(ExperimentalContracts::class)
 inline fun CharSequence?.isNotNullOrBlank(): Boolean {
     contract {
         returns(true) implies (this@isNotNullOrBlank != null)
     }
-    return (this == null || this.isBlank()).not()
+    return (this == null || isBlank()).not()
+}
+
+inline fun CharSequence?.isNotNullOrEmpty(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullOrEmpty != null)
+    }
+    return (this == null || length == 0).not()
 }

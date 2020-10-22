@@ -26,33 +26,27 @@ interface Loggable {
 
     val logger: Logger get() = CustomLoggerFactory.getLogger(javaClass)
 
-    @Deprecated("Use logInfo() instead", replaceWith = ReplaceWith("logInfo(s)"))
-    fun log(s: String?) = logger.info(s)
-
-    @Deprecated("Use logInfo() instead", replaceWith = ReplaceWith("logInfo(lazyMessage)"))
-    fun log(lazyMessage: () -> String?) = logger.info(lazyMessage)
-
     fun logInfo(s: String?) = logger.info(s)
 
-    fun logInfo(lazyMessage: () -> String?) = logger.info(lazyMessage)
+    fun logInfo(lazyMessage: () -> String?) = logger.info(lazyMessage = lazyMessage)
 
     fun logDebug(s: String?) = logger.debug(s)
 
-    fun logDebug(lazyMessage: () -> String?) = logger.debug(lazyMessage)
+    fun logDebug(lazyMessage: () -> String?) = logger.debug(lazyMessage = lazyMessage)
 
     fun logWarn(t: Throwable) = logger.warn(t.message, t)
 
     fun logWarn(message: String?) = logger.warn(message)
 
-    fun logWarn(lazyMessage: () -> String?) = logger.warn(lazyMessage)
+    fun logWarn(lazyMessage: () -> String?) = logger.warn(lazyMessage = lazyMessage)
 
     fun logTrace(message: String?) = logger.trace(message)
 
-    fun logTrace(lazyMessage: () -> String?) = logger.trace(lazyMessage)
+    fun logTrace(lazyMessage: () -> String?) = logger.trace(lazyMessage = lazyMessage)
 
     fun logError(message: String?, throwable: Throwable) = logger.error(message, throwable)
 
     fun logError(throwable: Throwable, message: String? = throwable.message) = logger.error(message, throwable)
 
-    fun logError(throwable: Throwable, lazyMessage: () -> String?) = logger.error(throwable, lazyMessage)
+    fun logError(throwable: Throwable, lazyMessage: () -> String?) = logger.error(throwable = throwable, lazyMessage = lazyMessage)
 }

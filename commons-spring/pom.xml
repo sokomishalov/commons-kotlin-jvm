@@ -57,13 +57,6 @@
 
         <dependency>
             <groupId>ru.sokomishalov.commons</groupId>
-            <artifactId>commons-reactor</artifactId>
-            <version>${revision}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.sokomishalov.commons</groupId>
             <artifactId>commons-coroutines</artifactId>
             <version>${revision}</version>
             <optional>true</optional>
@@ -137,13 +130,6 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>kapt</id>
                         <goals>
                             <goal>kapt</goal>
@@ -162,30 +148,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>

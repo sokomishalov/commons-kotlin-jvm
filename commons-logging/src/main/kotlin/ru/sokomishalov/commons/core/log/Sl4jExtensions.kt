@@ -16,17 +16,38 @@
 package ru.sokomishalov.commons.core.log
 
 import org.slf4j.Logger
+import org.slf4j.Marker
 
 /**
  * @author sokomishalov
  */
 
-inline fun Logger.info(lazyMessage: () -> String?) = if (isInfoEnabled) info(lazyMessage()) else Unit
+inline fun Logger.info(marker: Marker? = null, lazyMessage: () -> String?) {
+    if (isInfoEnabled) {
+        if (marker != null) info(marker, lazyMessage()) else info(lazyMessage())
+    }
+}
 
-inline fun Logger.debug(lazyMessage: () -> String?) = if (isDebugEnabled) debug(lazyMessage()) else Unit
+inline fun Logger.debug(marker: Marker? = null, lazyMessage: () -> String?) {
+    if (isDebugEnabled) {
+        if (marker != null) debug(marker, lazyMessage()) else debug(lazyMessage())
+    }
+}
 
-inline fun Logger.warn(lazyMessage: () -> String?) = if (isWarnEnabled) warn(lazyMessage()) else Unit
+inline fun Logger.warn(marker: Marker? = null, lazyMessage: () -> String?) {
+    if (isWarnEnabled) {
+        if (marker != null) warn(marker, lazyMessage()) else warn(lazyMessage())
+    }
+}
 
-inline fun Logger.trace(lazyMessage: () -> String?) = if (isTraceEnabled) trace(lazyMessage()) else Unit
+inline fun Logger.trace(marker: Marker? = null, lazyMessage: () -> String?) {
+    if (isTraceEnabled) {
+        if (marker != null) trace(marker, lazyMessage()) else trace(lazyMessage())
+    }
+}
 
-inline fun Logger.error(throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) = if (isErrorEnabled) error(lazyMessage(), throwable) else Unit
+inline fun Logger.error(marker: Marker? = null, throwable: Throwable, lazyMessage: () -> String? = { throwable.message }) {
+    if (isErrorEnabled) {
+        if (marker != null) error(marker, lazyMessage(), throwable) else error(lazyMessage(), throwable)
+    }
+}

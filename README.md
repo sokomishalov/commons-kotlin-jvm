@@ -21,7 +21,7 @@ Add the dependency:
 <dependency>
     <groupId>com.github.sokomishalov.commons</groupId>
     <artifactId>commons-[module]</artifactId>
-    <version>1.1.19</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -29,6 +29,5 @@ Available modules now are:
 - core
 - logging
 - serialization
-- reactor
 - coroutines
 - spring

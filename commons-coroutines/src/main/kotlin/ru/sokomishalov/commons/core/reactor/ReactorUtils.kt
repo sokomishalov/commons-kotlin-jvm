@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused", "EXPERIMENTAL_API_USAGE")
+@file:Suppress("unused")
 
 package ru.sokomishalov.commons.core.reactor
 
@@ -30,16 +30,6 @@ import kotlin.coroutines.EmptyCoroutineContext
  * @author sokomishalov
  */
 
-fun <T> aFlux(
-        context: CoroutineContext = EmptyCoroutineContext,
-        block: suspend CoroutineScope.() -> Iterable<T>
-): Flux<T> {
-    return flux(context) { block().forEach { send(it) } }
-}
+fun <T> aFlux(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> Iterable<T>): Flux<T> = flux(context) { block().forEach { send(it) } }
 
-fun <T> aMono(
-        context: CoroutineContext = EmptyCoroutineContext,
-        block: suspend CoroutineScope.() -> T?
-): Mono<T> {
-    return mono(context, block)
-}
+fun <T> aMono(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> T?): Mono<T> = mono(context, block)
