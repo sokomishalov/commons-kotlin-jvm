@@ -19,6 +19,7 @@ package ru.sokomishalov.commons.core.serialization
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
 import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.json.JsonReadFeature.ALLOW_TRAILING_COMMA
 import com.fasterxml.jackson.databind.DeserializationFeature.*
 import com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -34,10 +35,13 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  * @author sokomishalov
  */
 
+@JvmField
+val OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper()
+
 @JvmOverloads
 fun buildComplexObjectMapper(
         factory: JsonFactory? = null,
-        namingStrategy: PropertyNamingStrategy = LOWER_CAMEL_CASE
+        namingStrategy: PropertyNamingStrategy = LOWER_CAMEL_CASE,
 ): ObjectMapper {
     return ObjectMapper(factory)
             .registerKotlinModule()
@@ -51,10 +55,13 @@ fun buildComplexObjectMapper(
                     ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT
             )
             .enable(
-                    ACCEPT_CASE_INSENSITIVE_ENUMS
+                    ACCEPT_CASE_INSENSITIVE_ENUMS,
             )
             .enable(
                     WRITE_ENUMS_USING_TO_STRING
+            )
+            .enable(
+                    ALLOW_TRAILING_COMMA.mappedFeature()
             )
             .disable(
                     FAIL_ON_EMPTY_BEANS,

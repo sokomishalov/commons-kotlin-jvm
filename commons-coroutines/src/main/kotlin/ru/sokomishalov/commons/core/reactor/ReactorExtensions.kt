@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused", "EXPERIMENTAL_API_USAGE")
+@file:Suppress("unused")
 
 package ru.sokomishalov.commons.core.reactor
 
@@ -29,14 +29,14 @@ import ru.sokomishalov.commons.core.common.unit
  */
 
 
-suspend inline fun <reified T> Flux<T>.await(): List<T> = collectList().await() ?: emptyList()
+suspend inline fun <T> Flux<T>.await(): List<T> = collectList().await() ?: emptyList()
 
-suspend inline fun <reified T> Mono<T>.await(): T? = awaitFirstOrNull()
+suspend inline fun <T> Mono<T>.await(): T? = awaitFirstOrNull()
 
-suspend inline fun <reified T> Flux<T>.awaitUnit(): Unit = await().unit()
+suspend inline fun <T> Flux<T>.awaitUnit(): Unit = await().unit()
 
-suspend inline fun <reified T> Mono<T>.awaitUnit(): Unit = await().unit()
+suspend inline fun <T> Mono<T>.awaitUnit(): Unit = await().unit()
 
-suspend inline fun <reified T> Mono<T>.awaitOrElse(defaultValue: () -> T): T = awaitFirstOrNull() ?: defaultValue()
+suspend inline fun <T> Mono<T>.awaitOrElse(defaultValue: () -> T): T = awaitFirstOrNull() ?: defaultValue()
 
-suspend inline fun <reified T> Mono<T>.awaitStrict(): T = awaitFirst()
+suspend inline fun <T> Mono<T>.awaitStrict(): T = awaitFirst()

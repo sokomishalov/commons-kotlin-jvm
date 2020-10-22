@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package ru.sokomishalov.commons.core.collections
 
@@ -21,10 +21,6 @@ package ru.sokomishalov.commons.core.collections
  * @author sokomishalov
  */
 
-inline fun <reified K, V> Iterable<Map<K, V>>.toMap(): Map<K, V> {
-    return fold(mutableMapOf(), { acc, map -> acc.putAll(map).let { acc } })
-}
+inline fun <K, V> Iterable<Map<K, V>>.toMap(): Map<K, V> = fold(mutableMapOf(), { acc, map -> acc.putAll(map).let { acc } })
 
-inline fun <T, K, V> Iterable<T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
-    return map(transform).toMap()
-}
+inline fun <T, K, V> Iterable<T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> = map(transform).toMap()

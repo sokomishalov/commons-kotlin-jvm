@@ -17,6 +17,4 @@
 
 package ru.sokomishalov.commons.core.collections
 
-inline fun <T, K, V> Array<out T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> {
-    return map(transform).toMap()
-}
+inline fun <T, K, V> Array<out T>.toMap(transform: (T) -> Pair<K, V>): Map<K, V> = map(transform).toMap()

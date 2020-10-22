@@ -18,6 +18,7 @@
 package ru.sokomishalov.commons.core.log
 
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import ru.sokomishalov.commons.core.reflection.unwrapCompanionClass
 import java.util.concurrent.ConcurrentHashMap
 
@@ -28,7 +29,7 @@ object CustomLoggerFactory {
 
     private val loggersMap: MutableMap<String, Logger> = ConcurrentHashMap()
 
-    fun <T : Loggable> getLogger(clazz: Class<T>): Logger {
+    fun <T : Any> getLogger(clazz: Class<T>): Logger {
         val nonCompanionClazz = clazz.unwrapCompanionClass()
         return getLogger(nonCompanionClazz.name)
     }
@@ -37,7 +38,7 @@ object CustomLoggerFactory {
         val logger = loggersMap[className]
         return when {
             logger != null -> logger
-            else -> loggerFor(className).also {
+            else -> LoggerFactory.getLogger(className).also {
                 loggersMap[className] = it
             }
         }

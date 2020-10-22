@@ -22,9 +22,7 @@ package ru.sokomishalov.commons.core.reflection
  */
 
 
-inline fun <T : Any> Class<T>.unwrapCompanionClass(): Class<*> {
-    return when {
-        name.endsWith("\$Companion") -> enclosingClass ?: this
-        else -> this
-    }
+inline fun <T : Any> Class<T>.unwrapCompanionClass(): Class<*> = when {
+    name.endsWith("\$Companion") -> enclosingClass ?: this
+    else -> this
 }

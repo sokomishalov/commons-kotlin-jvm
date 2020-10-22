@@ -21,7 +21,6 @@
 package ru.sokomishalov.commons.spring.exception
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import io.netty.handler.timeout.TimeoutException
 import org.springframework.core.codec.DecodingException
 import org.springframework.core.codec.EncodingException
 import org.springframework.http.HttpStatus
@@ -47,7 +46,7 @@ import kotlin.NoSuchElementException
 
 
 open class CustomWebMvcRestExceptionHandler @JvmOverloads constructor(
-        private val includeStacktrace: Boolean = true
+        private val includeStacktrace: Boolean = true,
 ) {
 
     companion object : Loggable
@@ -93,8 +92,7 @@ open class CustomWebMvcRestExceptionHandler @JvmOverloads constructor(
     open fun handleNotRealized(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(NOT_IMPLEMENTED, e)
 
     @ExceptionHandler(
-            ConnectException::class,
-            TimeoutException::class
+            ConnectException::class
     )
     @ResponseStatus(GATEWAY_TIMEOUT)
     @ResponseBody

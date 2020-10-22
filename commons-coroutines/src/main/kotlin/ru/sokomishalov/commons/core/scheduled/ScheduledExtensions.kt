@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused", "EXPERIMENTAL_API_USAGE")
+@file:Suppress("unused")
 
 package ru.sokomishalov.commons.core.scheduled
 
@@ -30,7 +30,7 @@ fun CoroutineScope.runScheduled(
         context: CoroutineContext = EmptyCoroutineContext,
         delay: Duration = Duration.ZERO,
         interval: Duration = Duration.ZERO,
-        action: suspend () -> Unit
+        action: suspend () -> Unit,
 ): Job = launch(newCoroutineContext(context)) {
     sleep(delay.toMillis())
     if (interval > Duration.ZERO) {

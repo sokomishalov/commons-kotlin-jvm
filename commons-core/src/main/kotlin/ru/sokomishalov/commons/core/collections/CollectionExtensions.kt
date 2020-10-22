@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("NOTHING_TO_INLINE")
 
-package ru.sokomishalov.commons.core.serialization
+package ru.sokomishalov.commons.core.collections
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.csv.CsvFactory
+import kotlin.contracts.contract
 
 /**
  * @author sokomishalov
  */
 
+inline fun <T> Collection<T>?.isNotNullOrEmpty(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullOrEmpty != null)
+    }
 
-val CSV_OBJECT_MAPPER: ObjectMapper = buildComplexObjectMapper(factory = CsvFactory())
+    return (this == null || this.isEmpty()).not()
+}

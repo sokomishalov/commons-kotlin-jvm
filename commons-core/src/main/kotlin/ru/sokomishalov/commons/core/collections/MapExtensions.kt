@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package ru.sokomishalov.commons.core.collections
+
+import kotlin.contracts.contract
 
 
 /**
  * @author sokomishalov
  */
 
-infix fun <K, V> Map<K, V>.containsEntryFrom(other: Map<K, V>): Boolean {
-    return entries.intersect(other.entries).isNullOrEmpty().not()
+infix fun <K, V> Map<K, V>.containsEntryFrom(other: Map<K, V>): Boolean = entries.intersect(other.entries).isNullOrEmpty().not()
+
+inline fun <K, V> Map<K, V>?.isNotNullOrEmpty(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullOrEmpty != null)
+    }
+
+    return (this == null || this.isEmpty()).not()
 }
