@@ -33,19 +33,38 @@
         <module>commons-spring</module>
     </modules>
 
+    <name>Kotlin/JVM extra extensions</name>
+    <description>Bunch of common extensions for Kotlin/JVM</description>
+    <url>https://github.com/sokomishalov/commons-kotlin-jvm/</url>
+
+    <developers>
+        <developer>
+            <name>Mikhael Sokolov</name>
+            <email>sokomishalov@mail.ru</email>
+            <organization>ru.sokomishalov</organization>
+            <url>https://sokomishalov.github.io/about-me</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://choosealicense.com/licenses/apache-2.0/</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/sokomishalov/commons-kotlin-jvm</url>
+        <connection>scm:git:git://github.com/sokomishalov/commons-kotlin-jvm.git</connection>
+        <developerConnection>scm:git:ssh://github.com/sokomishalov/commons-kotlin-jvm.git</developerConnection>
+    </scm>
+
     <repositories>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
-
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
 
     <build>
         <plugins>
