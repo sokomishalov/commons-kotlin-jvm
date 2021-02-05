@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 @file:Suppress(
-        "RedundantModalityModifier",
-        "unused"
+    "RedundantModalityModifier",
+    "unused"
 )
 
 package ru.sokomishalov.commons.spring.exception
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import org.springframework.core.codec.DecodingException
-import org.springframework.core.codec.EncodingException
+import org.springframework.core.codec.CodecException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
-import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.http.converter.HttpMessageConversionException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.support.WebExchangeBindException
 import ru.sokomishalov.commons.core.log.Loggable
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.net.ConnectException
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -46,57 +43,61 @@ import kotlin.NoSuchElementException
 
 
 open class CustomWebMvcRestExceptionHandler @JvmOverloads constructor(
-        private val includeStacktrace: Boolean = true,
+    private val includeStacktrace: Boolean = true,
 ) {
 
     companion object : Loggable
 
     @ExceptionHandler(
-            IllegalArgumentException::class,
-            NoSuchElementException::class,
-            InvalidFormatException::class,
-            DateTimeParseException::class,
-            HttpMessageNotReadableException::class,
-            MethodArgumentNotValidException::class,
-            WebExchangeBindException::class,
-            DecodingException::class,
-            EncodingException::class
+        IllegalArgumentException::class,
+        NoSuchElementException::class,
+        InvalidFormatException::class,
+        DateTimeParseException::class,
+        HttpMessageConversionException::class,
+        MethodArgumentNotValidException::class,
+        WebExchangeBindException::class,
+        CodecException::class,
     )
     @ResponseStatus(BAD_REQUEST)
     @ResponseBody
-    open fun badRequestException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(BAD_REQUEST, e)
+    open fun badRequestException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> =
+        exchange.toErrorResponseEntity(BAD_REQUEST, e)
 
     @ExceptionHandler(
-            AccessDeniedException::class,
-            OperationNotSupportedException::class,
-            NoPermissionException::class
+        AccessDeniedException::class,
+        OperationNotSupportedException::class,
+        NoPermissionException::class
     )
     @ResponseStatus(FORBIDDEN)
     @ResponseBody
-    open fun forbiddenException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(FORBIDDEN, e)
+    open fun forbiddenException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> =
+        exchange.toErrorResponseEntity(FORBIDDEN, e)
 
     @ExceptionHandler(
-            AuthenticationException::class
+        AuthenticationException::class
     )
     @ResponseStatus(UNAUTHORIZED)
     @ResponseBody
-    open fun unauthorizedException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(UNAUTHORIZED, e)
+    open fun unauthorizedException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> =
+        exchange.toErrorResponseEntity(UNAUTHORIZED, e)
 
 
     @ExceptionHandler(
-            UnsupportedOperationException::class,
-            NotImplementedError::class
+        UnsupportedOperationException::class,
+        NotImplementedError::class
     )
     @ResponseStatus(NOT_IMPLEMENTED)
     @ResponseBody
-    open fun handleNotRealized(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(NOT_IMPLEMENTED, e)
+    open fun handleNotRealized(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> =
+        exchange.toErrorResponseEntity(NOT_IMPLEMENTED, e)
 
     @ExceptionHandler(
-            ConnectException::class
+        ConnectException::class
     )
     @ResponseStatus(GATEWAY_TIMEOUT)
     @ResponseBody
-    open fun gatewayTimeoutException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> = exchange.toErrorResponseEntity(status = GATEWAY_TIMEOUT, e = e)
+    open fun gatewayTimeoutException(e: Exception, exchange: HttpServletRequest): ResponseEntity<*> =
+        exchange.toErrorResponseEntity(status = GATEWAY_TIMEOUT, e = e)
 
 
     open fun HttpServletRequest.toErrorResponseEntity(status: HttpStatus, e: Exception): ResponseEntity<*> {
@@ -106,18 +107,15 @@ open class CustomWebMvcRestExceptionHandler @JvmOverloads constructor(
         }
 
         val map = mutableMapOf(
-                "timestamp" to Date(),
-                "path" to requestURI,
-                "status" to status.value(),
-                "error" to e.javaClass,
-                "message" to (e.message ?: status.reasonPhrase)
+            "timestamp" to Date(),
+            "path" to requestURI,
+            "status" to status.value(),
+            "error" to e.javaClass,
+            "message" to (e.message ?: status.reasonPhrase)
         )
 
         if (includeStacktrace) {
-            val stackTrace = StringWriter()
-            e.printStackTrace(PrintWriter(stackTrace))
-            stackTrace.flush()
-            map["trace"] = stackTrace.toString()
+            map["trace"] = e.stackTraceToString()
         }
 
         return ResponseEntity.status(status).body(map)

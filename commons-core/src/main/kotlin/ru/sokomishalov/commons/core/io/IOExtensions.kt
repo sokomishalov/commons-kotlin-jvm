@@ -71,9 +71,9 @@ fun File.unzipTo(path: String) {
 
 fun File.listFilesDeep(filter: (File) -> Boolean = { true }): List<File> {
     return walkTopDown()
-            .maxDepth(MAX_VALUE)
-            .filter { it.isFile && filter(it) }
-            .toList()
+        .maxDepth(MAX_VALUE)
+        .filter { it.isFile && filter(it) }
+        .toList()
 }
 
 fun File.isArchive(): Boolean {

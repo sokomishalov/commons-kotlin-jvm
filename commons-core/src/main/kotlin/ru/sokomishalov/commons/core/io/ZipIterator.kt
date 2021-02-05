@@ -21,9 +21,7 @@ import java.util.zip.ZipInputStream
 /**
  * @author sokomishalov
  */
-class ZipIterator(
-        private val zis: ZipInputStream
-) : Iterator<ZipEntry> {
+class ZipIterator(private val zis: ZipInputStream) : Iterator<ZipEntry> {
     private var next: ZipEntry? = null
 
     override operator fun hasNext(): Boolean {

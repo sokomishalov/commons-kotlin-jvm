@@ -47,51 +47,56 @@ private val TYPE_RESOLVER = TypeResolver()
 
 inline fun <reified T : Any> initDocket(type: DocumentationType = OAS_30): Docket {
     return Docket(type)
-            .select()
-            .apis(basePackage(T::class.java.`package`.name))
-            .paths { true }
-            .build()
+        .select()
+        .apis(basePackage(T::class.java.`package`.name))
+        .paths { true }
+        .build()
 }
 
 fun Docket.customize(
-        securityContext: SecurityContext? = null,
-        securityScheme: SecurityScheme? = null,
-        ignoredParameterTypes: List<Class<out Any>> = emptyList(),
-        genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, CompletableFuture::class.java, Future::class.java),
-        useDefaultResponseMessages: Boolean = false,
-        buildProperties: BuildProperties? = null,
-        title: String = buildProperties?.name.orEmpty(),
-        description: String = buildProperties?.artifact.orEmpty(),
-        version: String = buildProperties?.version.orEmpty(),
-        contact: Contact = DEFAULT_AUTHOR
+    securityContext: SecurityContext? = null,
+    securityScheme: SecurityScheme? = null,
+    ignoredParameterTypes: List<Class<out Any>> = emptyList(),
+    genericModelSubstitutes: List<Class<out Any>> = listOf(ResponseEntity::class.java, CompletableFuture::class.java, Future::class.java),
+    useDefaultResponseMessages: Boolean = false,
+    buildProperties: BuildProperties? = null,
+    title: String = buildProperties?.name.orEmpty(),
+    description: String = buildProperties?.artifact.orEmpty(),
+    version: String = buildProperties?.version.orEmpty(),
+    contact: Contact = DEFAULT_AUTHOR
 ): Docket {
     return this
-            .useDefaultResponseMessages(useDefaultResponseMessages)
-            .securityContexts(when {
+        .useDefaultResponseMessages(useDefaultResponseMessages)
+        .securityContexts(
+            when {
                 securityContext != null -> listOf(securityContext)
                 else -> emptyList()
-            })
-            .securitySchemes(when {
+            }
+        )
+        .securitySchemes(
+            when {
                 securityScheme != null -> listOf(securityScheme)
                 else -> emptyList()
-            })
-            .ignoredParameterTypes(*ignoredParameterTypes.toTypedArray())
-            .genericModelSubstitutes(*genericModelSubstitutes.toTypedArray())
-            .alternateTypeRules(
-                    newRule(
-                            TYPE_RESOLVER.resolve(Flux::class.java, FilePart::class.java),
-                            TYPE_RESOLVER.resolve(List::class.java, MultipartFile::class.java)
-                    ),
-                    newRule(
-                            TYPE_RESOLVER.resolve(Mono::class.java, FilePart::class.java),
-                            TYPE_RESOLVER.resolve(MultipartFile::class.java)
-                    )
+            }
+        )
+        .ignoredParameterTypes(*ignoredParameterTypes.toTypedArray())
+        .genericModelSubstitutes(*genericModelSubstitutes.toTypedArray())
+        .alternateTypeRules(
+            newRule(
+                TYPE_RESOLVER.resolve(Flux::class.java, FilePart::class.java),
+                TYPE_RESOLVER.resolve(List::class.java, MultipartFile::class.java)
+            ),
+            newRule(
+                TYPE_RESOLVER.resolve(Mono::class.java, FilePart::class.java),
+                TYPE_RESOLVER.resolve(MultipartFile::class.java)
             )
-            .apiInfo(ApiInfoBuilder()
-                    .title(title)
-                    .description(description)
-                    .contact(contact)
-                    .version(version)
-                    .build()
-            )
+        )
+        .apiInfo(
+            ApiInfoBuilder()
+                .title(title)
+                .description(description)
+                .contact(contact)
+                .version(version)
+                .build()
+        )
 }

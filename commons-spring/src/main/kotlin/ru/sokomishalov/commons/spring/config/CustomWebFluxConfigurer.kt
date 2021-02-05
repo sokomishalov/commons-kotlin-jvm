@@ -35,9 +35,9 @@ open class CustomWebFluxConfigurer : WebFluxConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry
-                .addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("*")
-                .maxAge(3600)
+            .addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("*")
+            .maxAge(3600)
     }
 }

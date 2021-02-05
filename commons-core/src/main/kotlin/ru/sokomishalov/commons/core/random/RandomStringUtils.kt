@@ -21,16 +21,16 @@ package ru.sokomishalov.commons.core.random
  * @author sokomishalov
  */
 
-private val LOWER_CASE_ALPHABET: CharRange = ('a'..'z')
-private val UPPER_CASE_ALPHABET: CharRange = ('A'..'Z')
-private val NUMBERS: CharRange = ('0'..'9')
+private val LOWER_CASE_ALPHABET: CharRange by lazy { ('a'..'z') }
+private val UPPER_CASE_ALPHABET: CharRange by lazy { ('A'..'Z') }
+private val NUMBERS: CharRange by lazy { ('0'..'9') }
 
 fun randomString(
-        length: Int = 20,
-        useLetters: Boolean = true,
-        useDigits: Boolean = true,
-        lowerCase: Boolean = true,
-        upperCase: Boolean = true
+    length: Int = 20,
+    useLetters: Boolean = true,
+    useDigits: Boolean = true,
+    lowerCase: Boolean = true,
+    upperCase: Boolean = true
 ): String {
     require(useLetters || useDigits)
     require(!useLetters || lowerCase || upperCase)

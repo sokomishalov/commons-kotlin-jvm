@@ -27,7 +27,7 @@ import java.net.InetAddress.getLocalHost
 
 val HOSTNAME: String by lazy {
     getenv("HOSTNAME")
-            ?: getenv("COMPUTERNAME")
-            ?: runCatching { getLocalHost().hostAddress }.getOrNull()
-            ?: EMPTY
+        ?: getenv("COMPUTERNAME")
+        ?: runCatching { getLocalHost().hostAddress }.getOrNull()
+        ?: EMPTY
 }
