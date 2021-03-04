@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <kotlin.version>1.4.30</kotlin.version>
         <kotlinx-coroutines.version>1.4.2</kotlinx-coroutines.version>
-        <jackson.version>2.12.1</jackson.version>
+        <jackson.version>2.12.2</jackson.version>
         <reactor.version>3.4.2</reactor.version>
         <javax-servlet-api.version>4.0.1</javax-servlet-api.version>
         <slf4j.version>1.7.30</slf4j.version>
