@@ -1,0 +1,101 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.mycila:license-maven-plugin
+    versions:
+    - "4.0"
+  - dependency-name: org.jetbrains.kotlin:kotlin-maven-allopen
+    versions:
+    - 1.4.21-2
+    - 1.4.30
+    - 1.4.31
+    - 1.4.32
+  - dependency-name: org.jetbrains.kotlin:kotlin-reflect
+    versions:
+    - 1.4.21-2
+    - 1.4.30
+    - 1.4.31
+    - 1.4.32
+  - dependency-name: org.jetbrains.kotlin:kotlin-test-junit
+    versions:
+    - 1.4.21-2
+    - 1.4.30
+    - 1.4.31
+    - 1.4.32
+  - dependency-name: org.jetbrains.kotlin:kotlin-maven-plugin
+    versions:
+    - 1.4.21-2
+    - 1.4.30
+    - 1.4.31
+    - 1.4.32
+  - dependency-name: org.jetbrains.kotlin:kotlin-stdlib-jdk8
+    versions:
+    - 1.4.21-2
+    - 1.4.30
+    - 1.4.31
+    - 1.4.32
+  - dependency-name: org.springframework.boot:spring-boot-autoconfigure
+    versions:
+    - 2.4.2
+    - 2.4.3
+    - 2.4.4
+  - dependency-name: org.springframework:spring-webmvc
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.springframework:spring-webflux
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.springframework:spring-context-support
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.springframework:spring-web
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.springframework:spring-context
+    versions:
+    - 5.3.3
+    - 5.3.4
+    - 5.3.5
+  - dependency-name: org.jetbrains.dokka:dokka-maven-plugin
+    versions:
+    - 1.4.20
+    - 1.4.20-dev-65
+    - 1.4.30
+  - dependency-name: com.fasterxml.jackson.datatype:jackson-datatype-jsr310
+    versions:
+    - 2.12.1
+    - 2.12.2
+  - dependency-name: com.fasterxml.jackson.datatype:jackson-datatype-jdk8
+    versions:
+    - 2.12.1
+    - 2.12.2
+  - dependency-name: com.fasterxml.jackson.module:jackson-module-kotlin
+    versions:
+    - 2.12.1
+    - 2.12.2
+  - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-reactor
+    versions:
+    - 1.4.2-native-mt
+  - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-reactive
+    versions:
+    - 1.4.2-native-mt
+  - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-jdk8
+    versions:
+    - 1.4.2-native-mt
+  - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-core
+    versions:
+    - 1.4.2-native-mt
